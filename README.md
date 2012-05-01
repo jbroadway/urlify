@@ -13,10 +13,10 @@ Usage:
 ```php
 <?php
 
-$title = URLify::filter (' J\'étudie le français ');
+echo URLify::filter (' J\'étudie le français ');
 // "jetudie-le-francais"
 
-$title = URLify::filter ('Lo siento, no hablo español');
+echo URLify::filter ('Lo siento, no hablo español.');
 // "lo-siento-no-hablo-espanol"
 
 ?>

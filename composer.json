@@ -1,7 +1,7 @@
 {
 	"name": "jbroadway/urlify",
 	"type": "library",
-	"description": "",
+	"description": "PHP port of URLify.js from the Django project. Transliterates non-ascii characters for use in URLs.",
 	"keywords": ["urlify","transliterate","translit","url","encode"],
 	"homepage": "https://github.com/jbroadway/urlify",
 	"license": "MIT",

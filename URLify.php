@@ -9,11 +9,11 @@
  *
  * Usage:
  *
- *     $title = URLify::filter ('Français');
- *     // "francais"
+ *     echo URLify::filter (' J\'étudie le français ');
+ *     // "jetudie-le-francais"
  *     
- *     $title = URLify::filter ('Español');
- *     // "espanol"
+ *     echo URLify::filter ('Lo siento, no hablo español.');
+ *     // "lo-siento-no-hablo-espanol"
  */
 class URLify {
 	private static $maps = array (
