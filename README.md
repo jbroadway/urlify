@@ -8,7 +8,9 @@ it will simply omit.
 * Author: [jbroadway](http://github.com/jbroadway)
 * License: MIT
 
-Usage:
+## Usage:
+
+To generate slugs for URLs:
 
 ```php
 <?php
@@ -18,6 +20,36 @@ echo URLify::filter (' J\'étudie le français ');
 
 echo URLify::filter ('Lo siento, no hablo español.');
 // "lo-siento-no-hablo-espanol"
+
+?>
+```
+
+To simply transliterate characters:
+
+```php
+<?php
+
+echo URLify::downcode ('J\'étudie le français');
+// "J'etudie le francais"
+
+echo URLify::downcode ('Lo siento, no hablo español.');
+// "Lo siento, no hablo espanol."
+
+?>
+```
+
+To extend the character list:
+
+```php
+<?php
+
+URLify::$maps[] = array (
+	'¿' => '?', '®' => '(r)', '¼' => '1/4',
+	'¼' => '1/2', '¾' => '3/4', '¶' => 'P'
+);
+
+echo URLify::downcode ('¿ ® ¼ ¼ ¾ ¶');
+// "? (r) 1/2 1/2 3/4 P"
 
 ?>
 ```
