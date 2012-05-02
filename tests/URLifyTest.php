@@ -24,9 +24,9 @@ class URLifyTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals ('? (r) 1/2 1/2 3/4 P', URLify::downcode ('¿ ® ¼ ¼ ¾ ¶'));
 	}
 
-	function test_remove_list () {
+	function test_remove_words () {
 		$this->assertEquals ('foo-bar', URLify::filter ('foo bar'));
-		URLify::remove_list (array ('foo', 'bar'));
+		URLify::remove_words (array ('foo', 'bar'));
 		$this->assertEquals ('', URLify::filter ('foo bar'));
 	}
 }

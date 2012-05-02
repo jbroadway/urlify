@@ -64,7 +64,7 @@ To extend the list of words to remove:
 ```php
 <?php
 
-URLify::remove_list (array ('remove', 'these', 'too'));
+URLify::remove_words (array ('remove', 'these', 'too'));
 
 ?>
 ```

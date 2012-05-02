@@ -138,7 +138,7 @@ class URLify {
 	 * Append words to the remove list. Accepts either single words
 	 * or an array of words.
 	 */
-	public static function remove_list ($words) {
+	public static function remove_words ($words) {
 		$words = is_array ($words) ? $words : array ($words);
 		self::$remove_list = array_merge (self::$remove_list, $words);
 	}
