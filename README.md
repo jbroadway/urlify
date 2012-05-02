@@ -48,13 +48,23 @@ To extend the character list:
 ```php
 <?php
 
-URLify::add (array (
+URLify::add_chars (array (
 	'¿' => '?', '®' => '(r)', '¼' => '1/4',
 	'¼' => '1/2', '¾' => '3/4', '¶' => 'P'
 ));
 
 echo URLify::downcode ('¿ ® ¼ ¼ ¾ ¶');
 // "? (r) 1/2 1/2 3/4 P"
+
+?>
+```
+
+To extend the list of words to remove:
+
+```php
+<?php
+
+URLify::remove_list (array ('remove', 'these', 'too'));
 
 ?>
 ```

@@ -125,10 +125,22 @@ class URLify {
 	/**
 	 * Add new characters to the list. `$map` should be a hash.
 	 */
-	public static function add ($map) {
+	public static function add_chars ($map) {
+		if (! is_array ($map)) {
+			throw new LogicException ('$map must be an associative array.');
+		}
 		self::$maps[] = $map;
 		self::$map = array ();
 		self::$chars = '';
+	}
+
+	/**
+	 * Append words to the remove list. Accepts either single words
+	 * or an array of words.
+	 */
+	public static function remove_list ($words) {
+		$words = is_array ($words) ? $words : array ($words);
+		self::$remove_list = array_merge (self::$remove_list, $words);
 	}
 
 	/**
