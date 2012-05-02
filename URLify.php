@@ -123,20 +123,29 @@ class URLify {
 	}
 
 	/**
+	 * Add new characters to the list. `$map` should be a hash.
+	 */
+	public static function add ($map) {
+		self::$maps[] = $map;
+		self::$map = array ();
+		self::$chars = '';
+	}
+
+	/**
 	 * Transliterates characters to their ASCII equivalents.
 	 */
-	public static function downcode ($slug) {
+	public static function downcode ($text) {
 		self::init ();
 
-		if (preg_match_all (self::$regex, $slug, $matches)) {
+		if (preg_match_all (self::$regex, $text, $matches)) {
 			for ($i = 0; $i < count ($matches[0]); $i++) {
 				$char = $matches[0][$i];
 				if (isset (self::$map[$char])) {
-					$slug = str_replace ($char, self::$map[$char], $slug);
+					$text = str_replace ($char, self::$map[$char], $text);
 				}
 			}
 		}
-		return $slug;
+		return $text;
 	}
 
 	/**
@@ -154,6 +163,13 @@ class URLify {
 		$text = preg_replace ('/[-\s]+/', '-', $text);		// convert spaces to hyphens
 		$text = strtolower ($text);							// convert to lowercase						
 		return trim (substr ($text, 0, $length), '-');	// trim to first $length chars
+	}
+
+	/**
+	 * Alias of `URLify::downcode()`.
+	 */
+	public static function transliterate ($text) {
+		return self::downcode ($text);
 	}
 }
 

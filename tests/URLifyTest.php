@@ -14,6 +14,15 @@ class URLifyTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals ('lo-siento-no-hablo-espanol', URLify::filter ('Lo siento, no hablo español.'));
 		$this->assertEquals ('f3pws', URLify::filter ('ΦΞΠΏΣ'));
 	}
+
+	function test_add () {
+		$this->assertEquals ('¿ ® ¼ ¼ ¾ ¶', URLify::downcode ('¿ ® ¼ ¼ ¾ ¶'));
+		URLify::add (array (
+			'¿' => '?', '®' => '(r)', '¼' => '1/4',
+			'¼' => '1/2', '¾' => '3/4', '¶' => 'P'
+		));
+		$this->assertEquals ('? (r) 1/2 1/2 3/4 P', URLify::downcode ('¿ ® ¼ ¼ ¾ ¶'));
+	}
 }
 
 ?>

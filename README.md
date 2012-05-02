@@ -35,6 +35,11 @@ echo URLify::downcode ('J\'étudie le français');
 echo URLify::downcode ('Lo siento, no hablo español.');
 // "Lo siento, no hablo espanol."
 
+/* Or use transliterate() alias: */
+
+echo URLify::transliterate ('Lo siento, no hablo español.');
+// "Lo siento, no hablo espanol."
+
 ?>
 ```
 
@@ -43,10 +48,10 @@ To extend the character list:
 ```php
 <?php
 
-URLify::$maps[] = array (
+URLify::add (array (
 	'¿' => '?', '®' => '(r)', '¼' => '1/4',
 	'¼' => '1/2', '¾' => '3/4', '¶' => 'P'
-);
+));
 
 echo URLify::downcode ('¿ ® ¼ ¼ ¾ ¶');
 // "? (r) 1/2 1/2 3/4 P"
