@@ -125,7 +125,7 @@ class URLify {
 	/**
 	 * Transliterates characters to their ASCII equivalents.
 	 */
-	private static function downcode ($slug) {
+	public static function downcode ($slug) {
 		self::init ();
 
 		if (preg_match_all (self::$regex, $slug, $matches)) {
