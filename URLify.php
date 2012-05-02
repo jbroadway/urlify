@@ -16,7 +16,7 @@
  *     // "lo-siento-no-hablo-espanol"
  */
 class URLify {
-	private static $maps = array (
+	public static $maps = array (
 		'latin_map' => array (
 			'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'AE', 'Ç' =>
 			'C', 'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I',
@@ -82,7 +82,7 @@ class URLify {
 	/**
 	 * List of words to remove from URLs.
 	 */
-	private static $remove_list = array (
+	public static $remove_list = array (
 		'a', 'an', 'as', 'at', 'before', 'but', 'by', 'for', 'from',
 		'is', 'in', 'into', 'like', 'of', 'off', 'on', 'onto', 'per',
 		'since', 'than', 'the', 'this', 'that', 'to', 'up', 'via',
