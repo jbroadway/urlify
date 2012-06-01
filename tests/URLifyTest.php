@@ -1,7 +1,4 @@
 <?php
-
-require_once ('URLify.php');
-
 class URLifyTest extends PHPUnit_Framework_TestCase {
 	function test_downcode () {
 		$this->assertEquals ('  J\'etudie le francais  ', URLify::downcode ('  J\'étudie le français  '));
