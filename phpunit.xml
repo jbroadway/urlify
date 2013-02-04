@@ -1,6 +1,6 @@
-<phpunit bootstrap="bootstrap.php">
+<phpunit bootstrap="tests/bootstrap.php">
     <testsuite name="URLify Test Suite">
-        <directory>.</directory>
+        <directory>tests</directory>
     </testsuite>
     <logging>
         <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
