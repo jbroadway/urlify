@@ -68,3 +68,18 @@ URLify::remove_words (array ('remove', 'these', 'too'));
 
 ?>
 ```
+
+To priorize a certain language map:
+
+```php
+<?php
+
+echo URLify::filter (' Ägypten und Österreich besitzen wie üblich ein Übermaß an ähnlich öligen Attachés ',60,"de");
+// "aegypten-und-oesterreich-besitzen-wie-ueblich-ein-uebermass-aehnlich-oeligen-attaches"
+   
+echo URLify::filter ('Cağaloğlu, çalıştığı, müjde, lazım, mahkûm',60,"tr");
+// "cagaloglu-calistigi-mujde-lazim-mahkum"
+
+?>
+```
+Please note that the "ü" is transliterated to "ue" in the first case, whereas it results in a simple "u" in the latter.
