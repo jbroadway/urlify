@@ -69,7 +69,7 @@ URLify::remove_words (array ('remove', 'these', 'too'));
 ?>
 ```
 
-To priorize a certain language map:
+To prioritize a certain language map:
 
 ```php
 <?php
