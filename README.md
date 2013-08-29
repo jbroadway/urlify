@@ -24,6 +24,18 @@ echo URLify::filter ('Lo siento, no hablo español.');
 ?>
 ```
 
+To generate slugs for file names:
+
+```php
+<?php
+
+echo URLify::filter ('фото.jpg', 60, "", true);
+// "foto.jpg"
+
+?>
+```
+
+
 To simply transliterate characters:
 
 ```php
