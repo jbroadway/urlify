@@ -196,14 +196,15 @@ class URLify {
 	/**
 	 * Filters a string, e.g., "Petty theft" to "petty-theft"
 	 */
-	public static function filter ($text, $length = 60, $language = "") {
+	public static function filter ($text, $length = 60, $language = "", $file_name = false) {
 		$text = self::downcode ($text,$language);
 
 		// remove all these words from the string before urlifying
 		$text = preg_replace ('/\b(' . join ('|', self::$remove_list) . ')\b/i', '', $text);
 
 		// if downcode doesn't hit, the char will be stripped here
-		$text = preg_replace ('/[^-\w\s]/', '', $text);		// remove unneeded chars
+		$remove_pattern = ($file_name) ? '/[^-.\w\s]/' : '/[^-\w\s]/';
+		$text = preg_replace ($remove_pattern, '', $text);		// remove unneeded chars
 		$text = str_replace ('_', ' ', $text);		// treat underscores as spaces
 		$text = preg_replace ('/^\s+|\s+$/', '', $text);	// trim leading/trailing spaces
 		$text = preg_replace ('/[-\s]+/', '-', $text);		// convert spaces to hyphens
