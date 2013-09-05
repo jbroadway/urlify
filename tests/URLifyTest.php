@@ -31,6 +31,12 @@ class URLifyTest extends PHPUnit_Framework_TestCase {
 		URLify::remove_words (array ('foo', 'bar'));
 		$this->assertEquals ('', URLify::filter ('foo bar'));
 	}
+	
+	function test_many_rounds_with_unknown_language_code () {
+		for ($i = 0; $i < 1000; $i++) {
+			URLify::downcode ('Lo siento, no hablo español.',-1);
+		}
+	}
 
 }
 
