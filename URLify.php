@@ -11,7 +11,7 @@
  *
  *     echo URLify::filter (' J\'étudie le français ');
  *     // "jetudie-le-francais"
- *     
+ *
  *     echo URLify::filter ('Lo siento, no hablo español.');
  *     // "lo-siento-no-hablo-espanol"
  */
@@ -174,7 +174,7 @@ class URLify {
 
 	/**
 	 * Transliterates characters to their ASCII equivalents.
-     * $language specifies a priority for a specific language. 
+     * $language specifies a priority for a specific language.
      * The latter is useful if languages have different rules for the same character.
 	 */
 	public static function downcode ($text, $language = "") {
@@ -202,12 +202,12 @@ class URLify {
 
 		// if downcode doesn't hit, the char will be stripped here
 		$remove_pattern = ($file_name) ? '/[^-.\w\s]/' : '/[^-\w\s]/';
-		$text = preg_replace ($remove_pattern, '', $text);		// remove unneeded chars
-		$text = str_replace ('_', ' ', $text);		// treat underscores as spaces
-		$text = preg_replace ('/^\s+|\s+$/', '', $text);	// trim leading/trailing spaces
-		$text = preg_replace ('/[-\s]+/', '-', $text);		// convert spaces to hyphens
-		$text = strtolower ($text);							// convert to lowercase						
-		return trim (substr ($text, 0, $length), '-');	// trim to first $length chars
+		$text = preg_replace ($remove_pattern, '', $text); // remove unneeded chars
+		$text = str_replace ('_', ' ', $text);             // treat underscores as spaces
+		$text = preg_replace ('/^\s+|\s+$/', '', $text);   // trim leading/trailing spaces
+		$text = preg_replace ('/[-\s]+/', '-', $text);     // convert spaces to hyphens
+		$text = strtolower ($text);                        // convert to lowercase
+		return trim (substr ($text, 0, $length), '-');     // trim to first $length chars
 	}
 
 	/**
@@ -217,5 +217,3 @@ class URLify {
 		return self::downcode ($text);
 	}
 }
-
-?>
