@@ -15,6 +15,8 @@ class URLifyTest extends PHPUnit_Framework_TestCase {
 		// priorization of language-specific maps
 		$this->assertEquals ('aouaou', URLify::filter ('ÄÖÜäöü',60,"tr"));
 		$this->assertEquals ('aeoeueaeoeue', URLify::filter ('ÄÖÜäöü',60,"de"));
+
+		$this->assertEquals ('bobby-mcferrin-dont-worry-be-happy', URLify::filter ("Bobby McFerrin — Don't worry be happy",600,"en"));
 	}
 
 	function test_add_chars () {

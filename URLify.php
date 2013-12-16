@@ -214,7 +214,7 @@ class URLify {
 		$text = preg_replace ('/\b(' . join ('|', self::$remove_list) . ')\b/i', '', $text);
 
 		// if downcode doesn't hit, the char will be stripped here
-		$remove_pattern = ($file_name) ? '/[^-.\w\s]/' : '/[^-\w\s]/';
+		$remove_pattern = ($file_name) ? '/[^-.\w\s]/u' : '/[^-\w\s]/u';
 		$text = preg_replace ($remove_pattern, '', $text); // remove unneeded chars
 		$text = str_replace ('_', ' ', $text);             // treat underscores as spaces
 		$text = preg_replace ('/^\s+|\s+$/', '', $text);   // trim leading/trailing spaces
