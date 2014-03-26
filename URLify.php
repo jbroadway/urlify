@@ -7,6 +7,10 @@
  * Czech, Polish, and Latvian. Symbols it cannot transliterate
  * it will simply omit.
  *
+ * Copyright (c) 2014 jbroadway
+ *
+ * See the LICENCE for copying permission.
+ *
  * Usage:
  *
  *     echo URLify::filter (' J\'étudie le français ');
