@@ -5,9 +5,6 @@ from the Django project. Handles symbols from Latin languages as well as Arabic,
 Latvian, Lithuanian, Polish, Romanian, Russian, Serbian, Turkish, Ukrainian and Vietnamese. Symbols it cannot
 transliterate it will simply omit.
 
-* Author: [jbroadway](http://github.com/jbroadway)
-* License: MIT
-
 ## Usage:
 
 To generate slugs for URLs:
