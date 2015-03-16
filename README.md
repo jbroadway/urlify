@@ -59,7 +59,7 @@ To extend the character list:
 
 URLify::add_chars (array (
 	'¿' => '?', '®' => '(r)', '¼' => '1/4',
-	'¼' => '1/2', '¾' => '3/4', '¶' => 'P'
+	'½' => '1/2', '¾' => '3/4', '¶' => 'P'
 ));
 
 echo URLify::downcode ('¿ ® ¼ ¼ ¾ ¶');
