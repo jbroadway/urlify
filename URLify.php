@@ -3,8 +3,9 @@
 /**
  * A PHP port of URLify.js from the Django project
  * (https://github.com/django/django/blob/master/django/contrib/admin/static/admin/js/urlify.js).
- * Handles symbols from Latin languages, Greek, Turkish, Russian, Ukrainian,
- * Czech, Polish, and Latvian. Symbols it cannot transliterate
+ * Handles symbols from Latin languages, Greek, Turkish, Bulgarian, Russian,
+ * Ukrainian, Czech, Polish, Romanian, Latvian, Lithuanian, Vietnamese, Arabic,
+ * Serbian, and Azerbaijani. Symbols it cannot transliterate
  * it will simply omit.
  *
  * Usage:
@@ -62,7 +63,7 @@ class URLify {
 			"е" => 'e',   "з" => 'z',  "и" => 'i',  "й" => 'y', "к" => 'k',  "л" => 'l',
 			"м" => 'm',   "н" => 'n',  "о" => 'o',  "п" => 'p', "р" => 'r',  "с" => 's',
 			"т" => 't',   "у" => 'u',  "ф" => 'f',  "х" => 'h', "ь" => '',   "ъ" => 'a'
-		),		
+		),
 		'ru' => array ( /* Russian */
 			'а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'yo', 'ж' => 'zh',
 			'з' => 'z', 'и' => 'i', 'й' => 'j', 'к' => 'k', 'л' => 'l', 'м' => 'm', 'н' => 'n', 'о' => 'o',
