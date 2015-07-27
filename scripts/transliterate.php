@@ -13,7 +13,8 @@ if($argc === 2) {
 	$s = $argv[1];
 //Or read from stdin if the argument wasn't present
 } else {
+	$piped = true;
 	$s = file_get_contents("php://stdin");
 }
 
-echo URLify::transliterate ($s) . "\n";
+echo URLify::transliterate($s) . ($piped ? "\n" : "");
