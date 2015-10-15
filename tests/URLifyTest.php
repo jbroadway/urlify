@@ -20,6 +20,8 @@ class URLifyTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals ('aeoeueaeoeue', URLify::filter ('ÄÖÜäöü',60,"de"));
 
 		$this->assertEquals ('bobby-mcferrin-dont-worry-be-happy', URLify::filter ("Bobby McFerrin — Don't worry be happy",600,"en"));
+		// test stripping and conversion of UTF-8 spaces
+		$this->assertEquals ('test-mahito-mukai', URLify::filter('向井　真人test　(Mahito Mukai)'));
 	}
 
 	function test_add_chars () {

@@ -244,8 +244,8 @@ class URLify {
 		$remove_pattern = ($file_name) ? '/[^_\-.\-a-zA-Z0-9\s]/u' : '/[^\s_\-a-zA-Z0-9]/u';
 		$text = preg_replace ($remove_pattern, '', $text); // remove unneeded chars
 		$text = str_replace ('_', ' ', $text);             // treat underscores as spaces
-		$text = preg_replace ('/^\s+|\s+$/', '', $text);   // trim leading/trailing spaces
-		$text = preg_replace ('/[-\s]+/', '-', $text);     // convert spaces to hyphens
+		$text = preg_replace ('/^\s+|\s+$/u', '', $text);  // trim leading/trailing spaces
+		$text = preg_replace ('/[-\s]+/u', '-', $text);    // convert spaces to hyphens
 		$text = strtolower ($text);                        // convert to lowercase
 		return trim (substr ($text, 0, $length), '-');     // trim to first $length chars
 	}
