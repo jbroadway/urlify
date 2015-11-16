@@ -45,6 +45,10 @@ class URLifyTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 
+	function test_remove_words_disable () {
+		URLify::remove_words (array ('foo', 'bar'));
+		$this->assertEquals ('foo-bar', URLify::filter ('foo bar', 60, '', false, false));
+	}
 }
 
 ?>
