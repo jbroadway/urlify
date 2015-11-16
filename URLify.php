@@ -234,11 +234,13 @@ class URLify {
 	/**
 	 * Filters a string, e.g., "Petty theft" to "petty-theft"
 	 */
-	public static function filter ($text, $length = 60, $language = "", $file_name = false) {
+	public static function filter ($text, $length = 60, $language = "", $file_name = false, $use_remove_list = true) {
 		$text = self::downcode ($text,$language);
 
-		// remove all these words from the string before urlifying
-		$text = preg_replace ('/\b(' . join ('|', self::$remove_list) . ')\b/i', '', $text);
+        if ($use_remove_list) {
+            // remove all these words from the string before urlifying
+            $text = preg_replace ('/\b(' . join ('|', self::$remove_list) . ')\b/i', '', $text);
+        }
 
 		// if downcode doesn't hit, the char will be stripped here
 		$remove_pattern = ($file_name) ? '/[^_\-.\-a-zA-Z0-9\s]/u' : '/[^\s_\-a-zA-Z0-9]/u';
