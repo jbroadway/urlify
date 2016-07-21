@@ -233,14 +233,20 @@ class URLify {
 
 	/**
 	 * Filters a string, e.g., "Petty theft" to "petty-theft"
+	 * @param string $text The text to return filtered
+	 * @param int $length The length (after filtering) of the string to be returned
+	 * @param string $language The transliteration language, passed down to downcode()
+	 * @param bool $file_name Whether there should be and additional filter considering this is a filename
+	 * @param bool $use_remove_list Whether you want to remove specific elements previously set in self::$remove_list
+	 * @param bool $lower_case Whether you want the filter to maintain casing or lowercase everything (default)
 	 */
-	public static function filter ($text, $length = 60, $language = "", $file_name = false, $use_remove_list = true) {
+	public static function filter ($text, $length = 60, $language = "", $file_name = false, $use_remove_list = true, $lower_case = true) {
 		$text = self::downcode ($text,$language);
 
-        if ($use_remove_list) {
-            // remove all these words from the string before urlifying
-            $text = preg_replace ('/\b(' . join ('|', self::$remove_list) . ')\b/i', '', $text);
-        }
+		if ($use_remove_list) {
+			// remove all these words from the string before urlifying
+			$text = preg_replace ('/\b(' . join ('|', self::$remove_list) . ')\b/i', '', $text);
+		}
 
 		// if downcode doesn't hit, the char will be stripped here
 		$remove_pattern = ($file_name) ? '/[^_\-.\-a-zA-Z0-9\s]/u' : '/[^\s_\-a-zA-Z0-9]/u';
@@ -248,7 +254,10 @@ class URLify {
 		$text = str_replace ('_', ' ', $text);             // treat underscores as spaces
 		$text = preg_replace ('/^\s+|\s+$/u', '', $text);  // trim leading/trailing spaces
 		$text = preg_replace ('/[-\s]+/u', '-', $text);    // convert spaces to hyphens
-		$text = strtolower ($text);                        // convert to lowercase
+		if ($lower_case) {
+			$text = strtolower ($text);                        // convert to lowercase
+		}
+
 		return trim (substr ($text, 0, $length), '-');     // trim to first $length chars
 	}
 
