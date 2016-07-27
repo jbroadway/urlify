@@ -239,8 +239,9 @@ class URLify {
 	 * @param bool $file_name Whether there should be and additional filter considering this is a filename
 	 * @param bool $use_remove_list Whether you want to remove specific elements previously set in self::$remove_list
 	 * @param bool $lower_case Whether you want the filter to maintain casing or lowercase everything (default)
+	 * @param bool $treat_underscore_as_space Treat underscore as space, so it will replaced with "-"
 	 */
-	public static function filter ($text, $length = 60, $language = "", $file_name = false, $use_remove_list = true, $lower_case = true) {
+	public static function filter ($text, $length = 60, $language = "", $file_name = false, $use_remove_list = true, $lower_case = true, $treat_underscore_as_space = true) {
 		$text = self::downcode ($text,$language);
 
 		if ($use_remove_list) {
@@ -251,7 +252,9 @@ class URLify {
 		// if downcode doesn't hit, the char will be stripped here
 		$remove_pattern = ($file_name) ? '/[^_\-.\-a-zA-Z0-9\s]/u' : '/[^\s_\-a-zA-Z0-9]/u';
 		$text = preg_replace ($remove_pattern, '', $text); // remove unneeded chars
-		$text = str_replace ('_', ' ', $text);             // treat underscores as spaces
+		if ($treat_underscore_as_space) {
+		    	$text = str_replace ('_', ' ', $text);             // treat underscores as spaces
+		}
 		$text = preg_replace ('/^\s+|\s+$/u', '', $text);  // trim leading/trailing spaces
 		$text = preg_replace ('/[-\s]+/u', '-', $text);    // convert spaces to hyphens
 		if ($lower_case) {
