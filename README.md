@@ -2,7 +2,7 @@
 
 A PHP port of [URLify.js](https://github.com/django/django/blob/master/django/contrib/admin/static/admin/js/urlify.js)
 from the Django project. Handles symbols from Latin languages as well as Arabic, Azerbaijani, Czech, German, Greek,
-Latvian, Lithuanian, Polish, Romanian, Bulgarian, Russian, Serbian, Turkish, Ukrainian and Vietnamese. Symbols it cannot
+Latvian, Lithuanian, Persian, Polish, Romanian, Bulgarian, Russian, Serbian, Turkish, Ukrainian and Vietnamese. Symbols it cannot
 transliterate it will simply omit.
 
 ## Usage:
