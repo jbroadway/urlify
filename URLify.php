@@ -5,7 +5,7 @@
  * (https://github.com/django/django/blob/master/django/contrib/admin/static/admin/js/urlify.js).
  * Handles symbols from Latin languages, Greek, Turkish, Bulgarian, Russian,
  * Ukrainian, Czech, Polish, Romanian, Latvian, Lithuanian, Vietnamese, Arabic,
- * Serbian, and Azerbaijani. Symbols it cannot transliterate
+ * Serbian, Azerbaijani and Kazakh. Symbols it cannot transliterate
  * it will simply omit.
  *
  * Usage:
@@ -16,7 +16,8 @@
  *     echo URLify::filter ('Lo siento, no hablo español.');
  *     // "lo-siento-no-hablo-espanol"
  */
-class URLify {
+class URLify
+{
 	public static $maps = array (
 		'de' => array ( /* German */
 			'Ä' => 'Ae', 'Ö' => 'Oe', 'Ü' => 'Ue', 'ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'ß' => 'ss',
@@ -53,16 +54,16 @@ class URLify {
 			'ö' => 'o', 'Ö' => 'O', 'ğ' => 'g', 'Ğ' => 'G'
 		),
 		'bg' => array( /* Bulgarian */
-			"Щ" => 'Sht', "Ш" => 'Sh', "Ч" => 'Ch', "Ц" => 'C', "Ю" => 'Yu', "Я" => 'Ya',
-			"Ж" => 'J',   "А" => 'A',  "Б" => 'B',  "В" => 'V', "Г" => 'G',  "Д" => 'D',
-			"Е" => 'E',   "З" => 'Z',  "И" => 'I',  "Й" => 'Y', "К" => 'K',  "Л" => 'L',
-			"М" => 'M',   "Н" => 'N',  "О" => 'O',  "П" => 'P', "Р" => 'R',  "С" => 'S',
-			"Т" => 'T',   "У" => 'U',  "Ф" => 'F',  "Х" => 'H', "Ь" => '',   "Ъ" => 'A',
-			"щ" => 'sht', "ш" => 'sh', "ч" => 'ch', "ц" => 'c', "ю" => 'yu', "я" => 'ya',
-			"ж" => 'j',   "а" => 'a',  "б" => 'b',  "в" => 'v', "г" => 'g',  "д" => 'd',
-			"е" => 'e',   "з" => 'z',  "и" => 'i',  "й" => 'y', "к" => 'k',  "л" => 'l',
-			"м" => 'm',   "н" => 'n',  "о" => 'o',  "п" => 'p', "р" => 'r',  "с" => 's',
-			"т" => 't',   "у" => 'u',  "ф" => 'f',  "х" => 'h', "ь" => '',   "ъ" => 'a'
+			'Щ' => 'Sht', 'Ш' => 'Sh', 'Ч' => 'Ch', 'Ц' => 'C', 'Ю' => 'Yu', 'Я' => 'Ya',
+			'Ж' => 'J',   'А' => 'A',  'Б' => 'B',  'В' => 'V', 'Г' => 'G',  'Д' => 'D',
+			'Е' => 'E',   'З' => 'Z',  'И' => 'I',  'Й' => 'Y', 'К' => 'K',  'Л' => 'L',
+			'М' => 'M',   'Н' => 'N',  'О' => 'O',  'П' => 'P', 'Р' => 'R',  'С' => 'S',
+			'Т' => 'T',   'У' => 'U',  'Ф' => 'F',  'Х' => 'H', 'Ь' => '',   'Ъ' => 'A',
+			'щ' => 'sht', 'ш' => 'sh', 'ч' => 'ch', 'ц' => 'c', 'ю' => 'yu', 'я' => 'ya',
+			'ж' => 'j',   'а' => 'a',  'б' => 'b',  'в' => 'v', 'г' => 'g',  'д' => 'd',
+			'е' => 'e',   'з' => 'z',  'и' => 'i',  'й' => 'y', 'к' => 'k',  'л' => 'l',
+			'м' => 'm',   'н' => 'n',  'о' => 'o',  'п' => 'p', 'р' => 'r',  'с' => 's',
+			'т' => 't',   'у' => 'u',  'ф' => 'f',  'х' => 'h', 'ь' => '',   'ъ' => 'a'
 		),
 		'ru' => array ( /* Russian */
 			'а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'yo', 'ж' => 'zh',
@@ -80,6 +81,10 @@ class URLify {
 		'uk' => array ( /* Ukrainian */
 			'Є' => 'Ye', 'І' => 'I', 'Ї' => 'Yi', 'Ґ' => 'G', 'є' => 'ye', 'і' => 'i', 'ї' => 'yi', 'ґ' => 'g'
 		),
+        'kk' => array ( /* Kazakh */
+            'Ә' => 'A', 'Ғ' => 'Gh', 'Қ' => 'Q', 'Ң' => 'Ng', 'Ө' => 'O', 'Ұ' => 'U', 'Ү' => 'U', 'Һ' => 'H',
+            'ә' => 'a', 'ғ' => 'gh', 'қ' => 'q', 'ң' => 'ng', 'ө' => 'o', 'ұ' => 'u', 'ү' => 'u', 'һ' => 'h',
+        ),
 		'cs' => array ( /* Czech */
 			'č' => 'c', 'ď' => 'd', 'ě' => 'e', 'ň' => 'n', 'ř' => 'r', 'š' => 's', 'ť' => 't', 'ů' => 'u',
 			'ž' => 'z', 'Č' => 'C', 'Ď' => 'D', 'Ě' => 'E', 'Ň' => 'N', 'Ř' => 'R', 'Š' => 'S', 'Ť' => 'T',
@@ -169,8 +174,10 @@ class URLify {
 
 	/**
 	 * Initializes the character map.
+     * @param string $language
 	 */
-	private static function init ($language = "") {
+	private static function init ($language = "")
+    {
 		if (count (self::$map) > 0 && (($language == "") || ($language == self::$language))) {
 			return;
 		}
@@ -199,8 +206,10 @@ class URLify {
 
 	/**
 	 * Add new characters to the list. `$map` should be a hash.
+     * @param array $map
 	 */
-	public static function add_chars ($map) {
+	public static function add_chars ($map)
+    {
 		if (! is_array ($map)) {
 			throw new LogicException ('$map must be an associative array.');
 		}
@@ -212,8 +221,10 @@ class URLify {
 	/**
 	 * Append words to the remove list. Accepts either single words
 	 * or an array of words.
+     * @param mixed $words
 	 */
-	public static function remove_words ($words) {
+	public static function remove_words ($words)
+    {
 		$words = is_array ($words) ? $words : array ($words);
 		self::$remove_list = array_merge (self::$remove_list, $words);
 	}
@@ -222,8 +233,12 @@ class URLify {
 	 * Transliterates characters to their ASCII equivalents.
      * $language specifies a priority for a specific language.
      * The latter is useful if languages have different rules for the same character.
+     * @param string $text
+     * @param string $language
+     * @return string
 	 */
-	public static function downcode ($text, $language = "") {
+	public static function downcode ($text, $language = "")
+    {
 		self::init ($language);
 
 		if (preg_match_all (self::$regex, $text, $matches)) {
@@ -246,8 +261,10 @@ class URLify {
 	 * @param bool $use_remove_list Whether you want to remove specific elements previously set in self::$remove_list
 	 * @param bool $lower_case Whether you want the filter to maintain casing or lowercase everything (default)
 	 * @param bool $treat_underscore_as_space Treat underscore as space, so it will replaced with "-"
+     * @return string
 	 */
-	public static function filter ($text, $length = 60, $language = "", $file_name = false, $use_remove_list = true, $lower_case = true, $treat_underscore_as_space = true) {
+	public static function filter ($text, $length = 60, $language = "", $file_name = false, $use_remove_list = true, $lower_case = true, $treat_underscore_as_space = true)
+    {
 		$text = self::downcode ($text,$language);
 
 		if ($use_remove_list) {
@@ -273,7 +290,8 @@ class URLify {
 	/**
 	 * Alias of `URLify::downcode()`.
 	 */
-	public static function transliterate ($text) {
+	public static function transliterate ($text)
+    {
 		return self::downcode ($text);
 	}
 }
