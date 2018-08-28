@@ -4,7 +4,7 @@
 	"description": "PHP port of URLify.js from the Django project. Transliterates non-ascii characters for use in URLs.",
 	"keywords": ["urlify","transliterate","translit","transliteration","url","encode","slug","link","iconv"],
 	"homepage": "https://github.com/jbroadway/urlify",
-	"license": "BSD",
+	"license": "BSD-3-Clause-Clear",
 	"authors": [
 		{
 			"name": "Johnny Broadway",
