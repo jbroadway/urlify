@@ -5,7 +5,7 @@
  * (https://github.com/django/django/blob/master/django/contrib/admin/static/admin/js/urlify.js).
  * Handles symbols from Latin languages, Greek, Turkish, Bulgarian, Russian,
  * Ukrainian, Czech, Polish, Romanian, Latvian, Lithuanian, Vietnamese, Arabic,
- * Serbian, Azerbaijani and Kazakh. Symbols it cannot transliterate
+ * Serbian, Azerbaijani, Kazakh and Slovak. Symbols it cannot transliterate
  * it will simply omit.
  *
  * Usage:
@@ -139,6 +139,9 @@ class URLify
 		'az' => array ( /* Azerbaijani */
 			'ç' => 'c', 'ə' => 'e', 'ğ' => 'g', 'ı' => 'i', 'ö' => 'o', 'ş' => 's', 'ü' => 'u',
 			'Ç' => 'C', 'Ə' => 'E', 'Ğ' => 'G', 'İ' => 'I', 'Ö' => 'O', 'Ş' => 'S', 'Ü' => 'U'
+		),
+		'sk' => array ( /* Slovak */
+			'ĺ' => 'l', 'ľ' => 'l', 'ŕ' => 'r'
 		)
 	);
 
