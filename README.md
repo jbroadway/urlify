@@ -58,10 +58,10 @@ To extend the character list:
 ```php
 <?php
 
-URLify::add_chars (array (
+URLify::add_chars ([
 	'¿' => '?', '®' => '(r)', '¼' => '1/4',
 	'½' => '1/2', '¾' => '3/4', '¶' => 'P'
-));
+]);
 
 echo URLify::downcode ('¿ ® ¼ ¼ ¾ ¶');
 // "? (r) 1/2 1/2 3/4 P"
@@ -72,7 +72,7 @@ To extend the list of words to remove:
 ```php
 <?php
 
-URLify::remove_words (array ('remove', 'these', 'too'));
+URLify::remove_words (['remove', 'these', 'too']);
 ```
 
 To prioritize a certain language map:
