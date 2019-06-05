@@ -204,7 +204,7 @@ class URLify
 			}
 		}
 
-		self::$regex = '/[' . self::$chars . ']/u';
+		self::$regex = '/[' . preg_quote(self::$chars, '/') . ']/u';
 	}
 
 	/**
