@@ -229,7 +229,7 @@ class URLify
 	public static function remove_words ($words)
     {
 		$words = is_array ($words) ? $words : array ($words);
-		self::$remove_list = array_merge (self::$remove_list, $words);
+		self::$remove_list = array_unique (array_merge (self::$remove_list, $words));
 	}
 
 	/**
