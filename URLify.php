@@ -107,7 +107,7 @@ class URLify
 			'ą' => 'a', 'č' => 'c', 'ę' => 'e', 'ė' => 'e', 'į' => 'i', 'š' => 's', 'ų' => 'u', 'ū' => 'u', 'ž' => 'z',
 			'Ą' => 'A', 'Č' => 'C', 'Ę' => 'E', 'Ė' => 'E', 'Į' => 'I', 'Š' => 'S', 'Ų' => 'U', 'Ū' => 'U', 'Ž' => 'Z'
 		),
-		'vn' => array ( /* Vietnamese */
+		'vi' => array ( /* Vietnamese */
 			'Á' => 'A', 'À' => 'A', 'Ả' => 'A', 'Ã' => 'A', 'Ạ' => 'A', 'Ă' => 'A', 'Ắ' => 'A', 'Ằ' => 'A', 'Ẳ' => 'A', 'Ẵ' => 'A', 'Ặ' => 'A', 'Â' => 'A', 'Ấ' => 'A', 'Ầ' => 'A', 'Ẩ' => 'A', 'Ẫ' => 'A', 'Ậ' => 'A',
 			'á' => 'a', 'à' => 'a', 'ả' => 'a', 'ã' => 'a', 'ạ' => 'a', 'ă' => 'a', 'ắ' => 'a', 'ằ' => 'a', 'ẳ' => 'a', 'ẵ' => 'a', 'ặ' => 'a', 'â' => 'a', 'ấ' => 'a', 'ầ' => 'a', 'ẩ' => 'a', 'ẫ' => 'a', 'ậ' => 'a',
 			'É' => 'E', 'È' => 'E', 'Ẻ' => 'E', 'Ẽ' => 'E', 'Ẹ' => 'E', 'Ê' => 'E', 'Ế' => 'E', 'Ề' => 'E', 'Ể' => 'E', 'Ễ' => 'E', 'Ệ' => 'E',
@@ -204,7 +204,7 @@ class URLify
 			}
 		}
 
-		self::$regex = '/[' . self::$chars . ']/u';
+		self::$regex = '/[' . preg_quote(self::$chars, '/') . ']/u';
 	}
 
 	/**
@@ -229,7 +229,7 @@ class URLify
 	public static function remove_words ($words)
     {
 		$words = is_array ($words) ? $words : array ($words);
-		self::$remove_list = array_merge (self::$remove_list, $words);
+		self::$remove_list = array_unique (array_merge (self::$remove_list, $words));
 	}
 
 	/**
