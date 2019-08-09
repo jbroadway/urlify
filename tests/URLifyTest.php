@@ -45,10 +45,8 @@ class URLifyTest extends TestCase {
 		$this->assertEquals ('', URLify::filter ('foo bar'));
 	}
 
-	function test_many_rounds_with_unknown_language_code () {
-		for ($i = 0; $i < 1000; $i++) {
-			URLify::downcode ('Lo siento, no hablo español.',-1);
-		}
+	function test_unknown_language_code () {
+		$this->assertEquals ('Lo siento, no hablo espanol.', URLify::downcode ('Lo siento, no hablo español.', -1));
 	}
 
 	function test_remove_words_disable () {
