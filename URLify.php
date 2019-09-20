@@ -158,53 +158,53 @@ class URLify
 	/**
 	 * The character map.
 	 */
-	private static $map = array ();
+	protected static $map = array ();
 
 	/**
 	 * The character list as a string.
 	 */
-	private static $chars = '';
+	protected static $chars = '';
 
 	/**
 	 * The character list as a regular expression.
 	 */
-	private static $regex = '';
+	protected static $regex = '';
 
 	/**
 	 * The current language
 	 */
-	private static $language = '';
+	protected static $language = '';
 
 	/**
 	 * Initializes the character map.
      * @param string $language
 	 */
-	private static function init ($language = "")
+	protected static function init ($language = "")
     {
-		if (count (self::$map) > 0 && (($language == "") || ($language == self::$language))) {
+		if (count (static::$map) > 0 && (($language == "") || ($language == static::$language))) {
 			return;
 		}
 
 		/* Is a specific map associated with $language ? */
-		if (isset(self::$maps[$language]) && is_array(self::$maps[$language])) {
+		if (isset(static::$maps[$language]) && is_array(static::$maps[$language])) {
 			/* Move this map to end. This means it will have priority over others */
-			$m = self::$maps[$language];
-			unset(self::$maps[$language]);
-			self::$maps[$language] = $m;
+			$m = static::$maps[$language];
+			unset(static::$maps[$language]);
+			static::$maps[$language] = $m;
 		}
 		/* Reset static vars */
-		self::$language = $language;
-		self::$map = array();
-		self::$chars = '';
+		static::$language = $language;
+		static::$map = array();
+		static::$chars = '';
 
-		foreach (self::$maps as $map) {
+		foreach (static::$maps as $map) {
 			foreach ($map as $orig => $conv) {
-				self::$map[$orig] = $conv;
-				self::$chars .= $orig;
+				static::$map[$orig] = $conv;
+				static::$chars .= $orig;
 			}
 		}
 
-		self::$regex = '/[' . preg_quote(self::$chars, '/') . ']/u';
+		static::$regex = '/[' . preg_quote(static::$chars, '/') . ']/u';
 	}
 
 	/**
@@ -216,9 +216,9 @@ class URLify
 		if (! is_array ($map)) {
 			throw new LogicException ('$map must be an associative array.');
 		}
-		self::$maps[] = $map;
-		self::$map = array ();
-		self::$chars = '';
+		static::$maps[] = $map;
+		static::$map = array ();
+		static::$chars = '';
 	}
 
 	/**
@@ -229,7 +229,7 @@ class URLify
 	public static function remove_words ($words)
     {
 		$words = is_array ($words) ? $words : array ($words);
-		self::$remove_list = array_unique (array_merge (self::$remove_list, $words));
+		static::$remove_list = array_unique (array_merge (static::$remove_list, $words));
 	}
 
 	/**
@@ -242,13 +242,13 @@ class URLify
 	 */
 	public static function downcode ($text, $language = "")
     {
-		self::init ($language);
+		static::init ($language);
 
-		if (preg_match_all (self::$regex, $text, $matches)) {
+		if (preg_match_all (static::$regex, $text, $matches)) {
 			for ($i = 0; $i < count ($matches[0]); $i++) {
 				$char = $matches[0][$i];
-				if (isset (self::$map[$char])) {
-					$text = str_replace ($char, self::$map[$char], $text);
+				if (isset (static::$map[$char])) {
+					$text = str_replace ($char, static::$map[$char], $text);
 				}
 			}
 		}
@@ -261,18 +261,18 @@ class URLify
 	 * @param int $length The length (after filtering) of the string to be returned
 	 * @param string $language The transliteration language, passed down to downcode()
 	 * @param bool $file_name Whether there should be and additional filter considering this is a filename
-	 * @param bool $use_remove_list Whether you want to remove specific elements previously set in self::$remove_list
+	 * @param bool $use_remove_list Whether you want to remove specific elements previously set in static::$remove_list
 	 * @param bool $lower_case Whether you want the filter to maintain casing or lowercase everything (default)
 	 * @param bool $treat_underscore_as_space Treat underscore as space, so it will replaced with "-"
      * @return string
 	 */
 	public static function filter ($text, $length = 60, $language = "", $file_name = false, $use_remove_list = true, $lower_case = true, $treat_underscore_as_space = true)
     {
-		$text = self::downcode ($text,$language);
+		$text = static::downcode ($text,$language);
 
 		if ($use_remove_list) {
 			// remove all these words from the string before urlifying
-			$text = preg_replace ('/\b(' . join ('|', self::$remove_list) . ')\b/i', '', $text);
+			$text = preg_replace ('/\b(' . join ('|', static::$remove_list) . ')\b/i', '', $text);
 		}
 
 		// if downcode doesn't hit, the char will be stripped here
@@ -295,6 +295,6 @@ class URLify
 	 */
 	public static function transliterate ($text)
     {
-		return self::downcode ($text);
+		return static::downcode ($text);
 	}
 }
