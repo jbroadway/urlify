@@ -264,9 +264,10 @@ class URLify
 	 * @param bool $use_remove_list Whether you want to remove specific elements previously set in self::$remove_list
 	 * @param bool $lower_case Whether you want the filter to maintain casing or lowercase everything (default)
 	 * @param bool $treat_underscore_as_space Treat underscore as space, so it will replaced with "-"
+	 * @param bool $trim_under_score Remove first and last "-"
      * @return string
 	 */
-	public static function filter ($text, $length = 60, $language = "", $file_name = false, $use_remove_list = true, $lower_case = true, $treat_underscore_as_space = true)
+	public static function filter ($text, $length = 60, $language = "", $file_name = false, $use_remove_list = true, $lower_case = true, $treat_underscore_as_space = true, $trim_under_score = true)
     {
 		$text = self::downcode ($text,$language);
 
@@ -286,8 +287,14 @@ class URLify
 		if ($lower_case) {
 			$text = strtolower ($text);                        // convert to lowercase
 		}
+		
+		$text = substr ($text, 0, $length); // Cut to $length value
+		
+		if ($trim_under_score) {
+			$text = trim ($text, '-'); // trim "-"
+		}
 
-		return trim (substr ($text, 0, $length), '-');     // trim to first $length chars
+		return $text;
 	}
 
 	/**
