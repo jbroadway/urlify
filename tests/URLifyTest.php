@@ -6,18 +6,18 @@ class URLifyTest extends TestCase {
 	function test_downcode () {
 		$this->assertEquals ('  J\'etudie le francais  ', URLify::downcode ('  J\'étudie le français  '));
 		$this->assertEquals ('Lo siento, no hablo espanol.', URLify::downcode ('Lo siento, no hablo español.'));
-		$this->assertEquals ('F3PWS', URLify::downcode ('ΦΞΠΏΣ'));
+		$this->assertEquals ('FKsPWS', URLify::downcode ('ΦΞΠΏΣ'));
 		$this->assertEquals ('foo-bar', URLify::filter ('_foo_bar_'));
 	}
 
 	function test_filter () {
 		$this->assertEquals ('jetudie-le-francais', URLify::filter ('  J\'étudie le français  '));
 		$this->assertEquals ('lo-siento-no-hablo-espanol', URLify::filter ('Lo siento, no hablo español.'));
-		$this->assertEquals ('f3pws', URLify::filter ('ΦΞΠΏΣ'));
+		$this->assertEquals ('fkspws', URLify::filter ('ΦΞΠΏΣ'));
 		$this->assertEquals ('', URLify::filter('大般若經'));
 		$this->assertEquals ('test-.txt', URLify::filter('test-大般若經.txt', 60, "", $file_name = true));
 		$this->assertEquals ('yakrhy-ltoytr', URLify::filter('ياكرهي لتويتر'));
-		$this->assertEquals ('saaat-25', URLify::filter('ساعت ۲۵'));
+		$this->assertEquals ('saaat', URLify::filter('ساعت ۲۵'));
 		$this->assertEquals ('foto.jpg', URLify::filter ('фото.jpg', 60, "", $file_name = true));
 		// priorization of language-specific maps
 		$this->assertEquals ('aouaou', URLify::filter ('ÄÖÜäöü',60,"tr"));
@@ -31,7 +31,7 @@ class URLifyTest extends TestCase {
 	}
 
 	function test_add_chars () {
-		$this->assertEquals ('¿ ® ¼ ¼ ¾ ¶', URLify::downcode ('¿ ® ¼ ¼ ¾ ¶'));
+		$this->assertEquals ('¿  (r)  ¼ ¼ ¾ ¶', URLify::downcode ('¿ ® ¼ ¼ ¾ ¶'));
 		URLify::add_chars (array (
 			'¿' => '?', '®' => '(r)', '¼' => '1/4',
 			'¼' => '1/2', '¾' => '3/4', '¶' => 'P'
