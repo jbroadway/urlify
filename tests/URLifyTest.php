@@ -14,10 +14,10 @@ class URLifyTest extends TestCase {
 		$this->assertEquals ('jetudie-le-francais', URLify::filter ('  J\'étudie le français  '));
 		$this->assertEquals ('lo-siento-no-hablo-espanol', URLify::filter ('Lo siento, no hablo español.'));
 		$this->assertEquals ('fkspws', URLify::filter ('ΦΞΠΏΣ'));
-		$this->assertEquals ('', URLify::filter('大般若經'));
-		$this->assertEquals ('test-.txt', URLify::filter('test-大般若經.txt', 60, "", $file_name = true));
+		$this->assertEquals ('da-ban-ruo-jing', URLify::filter('大般若經'));
+		$this->assertEquals ('test-da-ban-ruo-jing-.txt', URLify::filter('test-大般若經.txt', 60, "", $file_name = true));
 		$this->assertEquals ('yakrhy-ltoytr', URLify::filter('ياكرهي لتويتر'));
-		$this->assertEquals ('saaat', URLify::filter('ساعت ۲۵'));
+		$this->assertEquals ('saaat-25', URLify::filter('ساعت ۲۵'));
 		$this->assertEquals ('foto.jpg', URLify::filter ('фото.jpg', 60, "", $file_name = true));
 		// priorization of language-specific maps
 		$this->assertEquals ('aouaou', URLify::filter ('ÄÖÜäöü',60,"tr"));
@@ -25,13 +25,13 @@ class URLifyTest extends TestCase {
 
 		$this->assertEquals ('bobby-mcferrin-dont-worry-be-happy', URLify::filter ("Bobby McFerrin — Don't worry be happy",600,"en"));
 		// test stripping and conversion of UTF-8 spaces
-		$this->assertEquals ('test-mahito-mukai', URLify::filter('向井　真人test　(Mahito Mukai)'));
+		$this->assertEquals ('xiang-jing-zhen-ren-test-mahito-mukai', URLify::filter('向井　真人test　(Mahito Mukai)'));
 		// Treat underscore as space
 		$this->assertEquals ('text_with_underscore', URLify::filter('text_with_underscore', 60, "en", true, true, true, false));
 	}
 
 	function test_add_chars () {
-		$this->assertEquals ('¿  (r)  ¼ ¼ ¾ ¶', URLify::downcode ('¿ ® ¼ ¼ ¾ ¶'));
+		$this->assertEquals ('? (r) 1/4 1/4 3/4 P', URLify::downcode ('¿ ® ¼ ¼ ¾ ¶'));
 		URLify::add_chars (array (
 			'¿' => '?', '®' => '(r)', '¼' => '1/4',
 			'¼' => '1/2', '¾' => '3/4', '¶' => 'P'
@@ -42,7 +42,7 @@ class URLifyTest extends TestCase {
 	function test_remove_words () {
 		$this->assertEquals ('foo-bar', URLify::filter ('foo bar'));
 		URLify::remove_words (array ('foo', 'bar'));
-		$this->assertEquals ('', URLify::filter ('foo bar'));
+		$this->assertEquals ('', URLify::filter ('foo bar', 200, 'en', false, true));
 	}
 
 	function test_unknown_language_code () {
