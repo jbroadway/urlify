@@ -1,9 +1,6 @@
-<?php
-set_error_handler(function () {
-  echo file_get_contents(dirname(__DIR__).'/INSTALL');
-  exit(1);
-}, E_ALL);
+<?php declare(strict_types=1);
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+\error_reporting(\E_ALL);
+\ini_set('display_errors', '1');
 
-restore_error_handler();
+require_once \dirname(__DIR__) . '/vendor/autoload.php';

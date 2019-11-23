@@ -1,0 +1,6 @@
+/.editorconfig  export-ignore
+/.gitignore     export-ignore
+/.gitattributes export-ignore
+/phpcs.php_cs   export-ignore
+/phpstan.neon   export-ignore
+/tests          export-ignore

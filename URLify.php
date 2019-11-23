@@ -74,6 +74,14 @@ class URLify
     }
 
     /**
+     * @return void
+     */
+    public static function reset_chars()
+    {
+        self::$maps = [];
+    }
+
+    /**
      * Transliterates characters to their ASCII equivalents.
      * $language specifies a priority for a specific language.
      * The latter is useful if languages have different rules for the same character.
@@ -89,7 +97,6 @@ class URLify
         string $language = 'en',
         string $unknown = ''
     ): string {
-
         $string = self::expandString($string, $language);
 
         foreach (self::$maps as $mapsInner) {
