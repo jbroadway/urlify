@@ -126,7 +126,7 @@ kannada-nnge-haani-aagde-naanu-gjnnu-tinbhudu
 hindi-maain-kaaanca-khaaa-sakataaa-hauun-oura-maujhae-usasae-kaoii-caota-nahaiin-pahauncataii
 tamil-naannn-knnnnaatti-caappittuveennn-atnnnaal-ennnkku-oru-keettum-vraatu
 telugu-neenu-gaaju-tinglnu-mriyu-alaa-ceesinaa-naaku-eemi-ibbndi-leedu
-sinhalese-mtt-viidu-rupee-kaaemtt-haekiyi-eyin-mtt-kisi-haaniyk-sidu-novee
+sinhalese-mtt-viiduru-kaaemtt-haekiyi-eyin-mtt-kisi-haaniyk-sidu-novee
 urdu3-myn-kanch-kha-skta-hon-aor-mghy-tklyf-nhyn-hoty
 pashto3-zh-shyshh-khorl-shm-hghh-ma-nh-khoroy
 farsi-persian3-mn-my-toanm-bdoni-ahsas-drd-shyshh-bkhorm

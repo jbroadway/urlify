@@ -18,21 +18,21 @@ class URLify
      *
      * ISO 639-1 codes: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
      *
-     * @var array
+     * @var array[]
      */
     public static $maps = [];
 
     /**
      * List of words to remove from URLs.
      *
-     * @var array
+     * @var array[]
      */
     public static $remove_list = [];
 
     /**
      * An array of strings that will convert into the separator-char - used by "URLify::filter()".
      *
-     * @var array
+     * @var string[]
      */
     private static $arrayToSeparator = [];
 
@@ -41,6 +41,10 @@ class URLify
      *
      * @param array $array <p>An array of things that should replaced by the separator.</p>
      * @param bool  $merge <p>Keep the previous (default) array-to-separator array.</p>
+     *
+     * @return void
+     *
+     * @psalm-param string[] $array
      */
     public static function add_array_to_separator(array $array, bool $merge = true)
     {
@@ -61,6 +65,10 @@ class URLify
      *
      * @param array       $map
      * @param string|null $language
+     *
+     * @return void
+     *
+     * @psalm-param array<string, string> $map
      */
     public static function add_chars(array $map, string $language = null)
     {
@@ -86,9 +94,9 @@ class URLify
      * $language specifies a priority for a specific language.
      * The latter is useful if languages have different rules for the same character.
      *
-     * @param string $string                            <p>The input string.</p>
-     * @param string $language                          <p>Your primary language.</p>
-     * @param string $unknown                           <p>Character use if character unknown. (default is ?).</p>
+     * @param string $string   <p>The input string.</p>
+     * @param string $language <p>Your primary language.</p>
+     * @param string $unknown  <p>Character use if character unknown. (default is ?).</p>
      *
      * @return string
      */
@@ -105,20 +113,18 @@ class URLify
             }
         }
 
-        $langSpecific = \voku\helper\ASCII::charsArrayWithOneLanguage($language, true);
-        if (!empty($langSpecific)) {
-            $string = \str_replace(
-                $langSpecific['orig'],
-                $langSpecific['replace'],
-                $string
-            );
-        }
+        $string = \voku\helper\ASCII::to_ascii(
+            $string,
+            $language,
+            false,
+            true
+        );
 
-        foreach (\voku\helper\ASCII::charsArrayWithMultiLanguageValues(true) as $replace => $orig) {
-            $string = \str_replace($orig, $replace, $string);
-        }
-
-        return \voku\helper\ASCII::to_transliterate($string, $unknown, false);
+        return \voku\helper\ASCII::to_transliterate(
+            $string,
+            $unknown,
+            false
+        );
     }
 
     /**
@@ -126,20 +132,20 @@ class URLify
      *
      * e.g.: "Petty<br>theft" to "Petty-theft"
      *
-     * @param string $string                            <p>The text you want to convert.</p>
-     * @param int    $maxLength                         <p>Max. length of the output string, set to "0" (zero) to
-     *                                                  disable it</p>
-     * @param string $language                          <p>The language you want to convert to.</p>
-     * @param bool   $fileName                          <p>
-     *                                                  Keep the "." from the extension e.g.: "imaäe.jpg" =>
-     *                                                  "image.jpg"
-     *                                                  </p>
-     * @param bool   $removeWords                       <p>
-     *                                                  Remove some "words" from the string.<br />
-     *                                                  Info: Set extra words via <strong>remove_words()</strong>.
-     *                                                  </p>
-     * @param bool   $strToLower                        <p>Use <strong>strtolower()</strong> at the end.</p>
-     * @param bool|string $separator                         <p>Define a new separator for the words.</p>
+     * @param string      $string      <p>The text you want to convert.</p>
+     * @param int         $maxLength   <p>Max. length of the output string, set to "0" (zero) to
+     *                                 disable it</p>
+     * @param string      $language    <p>The language you want to convert to.</p>
+     * @param bool        $fileName    <p>
+     *                                 Keep the "." from the extension e.g.: "imaäe.jpg" =>
+     *                                 "image.jpg"
+     *                                 </p>
+     * @param bool        $removeWords <p>
+     *                                 Remove some "words" from the string.<br />
+     *                                 Info: Set extra words via <strong>remove_words()</strong>.
+     *                                 </p>
+     * @param bool        $strToLower  <p>Use <strong>strtolower()</strong> at the end.</p>
+     * @param bool|string $separator   <p>Define a new separator for the words.</p>
      *
      * @return string
      */
@@ -178,21 +184,28 @@ class URLify
         }
 
         // remove apostrophes which are not used as quotes around a string
-        $stringTmp = \preg_replace("/(\w)'(\w)/u", '${1}${2}', $string);
-        if ($stringTmp !== null) {
-            $string = (string) $stringTmp;
+        if (\strpos($string, "'") !== false) {
+            $stringTmp = \preg_replace("/(\w)'(\w)/u", '${1}${2}', $string);
+            if ($stringTmp !== null) {
+                $string = (string) $stringTmp;
+            }
         }
 
         // replace with $separator
-        // +
-        // remove all other html-tags
-        $string = \strip_tags(
-            (string) \preg_replace(
-                self::$arrayToSeparator,
-                $separator,
-                $string
-            )
+        $string = (string) \preg_replace(
+            self::$arrayToSeparator,
+            $separator,
+            $string
         );
+
+        // remove all other html-tags
+        if (
+            \strpos($string, '<') !== false
+            ||
+            \strpos($string, '>') !== false
+        ) {
+            $string = \strip_tags($string);
+        }
 
         // use special language replacer
         $string = self::downcode($string, $language);
@@ -222,16 +235,16 @@ class URLify
 
         $string = (string) \preg_replace(
             [
-                '/[^' . $separatorEscaped . $removePatternAddOn . '\-a-zA-Z0-9\s]/u',
                 // 1) remove un-needed chars
-                '/[\s]+/u',
+                '/[^' . $separatorEscaped . $removePatternAddOn . '\-a-zA-Z0-9\s]/u',
                 // 2) convert spaces to $separator
-                $removeWordsSearch,
+                '/[\s]+/u',
                 // 3) remove some extras words
-                '/[' . ($separatorEscaped ?: ' ') . ']+/u',
+                $removeWordsSearch,
                 // 4) remove double $separator's
-                '/[' . ($separatorEscaped ?: ' ') . ']+$/u',
+                '/[' . ($separatorEscaped ?: ' ') . ']+/u',
                 // 5) remove $separator at the end
+                '/[' . ($separatorEscaped ?: ' ') . ']+$/u',
             ],
             [
                 '',
@@ -268,7 +281,9 @@ class URLify
      *
      * @param string|string[] $words
      * @param string          $language
-     * @param bool            $merge    <p>Keep the previous (default) remove-words array.</p>
+     * @param bool            $merge <p>Keep the previous (default) remove-words array.</p>
+     *
+     * @return void
      */
     public static function remove_words($words, string $language = 'en', bool $merge = true)
     {
@@ -276,7 +291,6 @@ class URLify
             $words = [$words];
         }
 
-        /** @noinspection ForeachSourceInspection */
         foreach ($words as $removeWordKey => $removeWord) {
             $words[$removeWordKey] = \preg_quote($removeWord, '/');
         }
@@ -295,6 +309,8 @@ class URLify
 
     /**
      * Reset the internal "self::$arrayToSeparator" to the default values.
+     *
+     * @return void
      */
     public static function reset_array_to_separator()
     {
@@ -306,34 +322,11 @@ class URLify
     }
 
     /**
-     * @param string $language
-     *
-     * @return string
-     */
-    private static function get_language_for_reset_remove_list(string $language): string
-    {
-        if ($language === '') {
-            return '';
-        }
-
-        if (
-            \strpos($language, '_') === false
-            &&
-            \strpos($language, '-') === false
-        ) {
-            $language = \strtolower($language);
-        } else {
-            $regex = '/(?<first>[a-z]{2}).*/i';
-            $language = \strtolower((string) \preg_replace($regex, '$1', $language));
-        }
-
-        return $language;
-    }
-
-    /**
      * reset the word-remove-array
      *
      * @param string $language
+     *
+     * @return void
      */
     public static function reset_remove_list(string $language = 'en')
     {
@@ -377,7 +370,7 @@ class URLify
      * project, distributed under the Eclipse Public License.
      * Copyright 2012 Pelle Braendgaard
      *
-     * @param string $string   The string to expand
+     * @param string $string The string to expand
      * @param string $language
      *
      * @return string The result of expanding the string
@@ -390,6 +383,31 @@ class URLify
     }
 
     /**
+     * @param string $language
+     *
+     * @return string
+     */
+    private static function get_language_for_reset_remove_list(string $language)
+    {
+        if ($language === '') {
+            return '';
+        }
+
+        if (
+            \strpos($language, '_') === false
+            &&
+            \strpos($language, '-') === false
+        ) {
+            $language = \strtolower($language);
+        } else {
+            $regex = '/(?<first>[a-z]{2}).*/i';
+            $language = \strtolower((string) \preg_replace($regex, '$1', $language));
+        }
+
+        return $language;
+    }
+
+    /**
      * Expands the numeric currencies in euros, dollars, pounds
      * and yens that the given string may include.
      *
@@ -398,8 +416,20 @@ class URLify
      *
      * @return string
      */
-    private static function expandCurrencies(string $string, string $language = 'en'): string
+    private static function expandCurrencies(string $string, string $language = 'en')
     {
+        if (
+            \strpos($string, '€') === false
+            &&
+            \strpos($string, '$') === false
+            &&
+            \strpos($string, '£') === false
+            &&
+            \strpos($string, '¥') === false
+        ) {
+            return $string;
+        }
+
         if ($language === 'de') {
             return (string) \preg_replace(
                 [
@@ -467,8 +497,24 @@ class URLify
      *
      * @return string
      */
-    private static function expandSymbols(string $string, string $language = 'en'): string
+    private static function expandSymbols(string $string, string $language = 'en')
     {
+        if (
+            \strpos($string, '©') === false
+            &&
+            \strpos($string, '®') === false
+            &&
+            \strpos($string, '@') === false
+            &&
+            \strpos($string, '&') === false
+            &&
+            \strpos($string, '%') === false
+            &&
+            \strpos($string, '=') === false
+        ) {
+            return $string;
+        }
+
         $maps = \voku\helper\ASCII::charsArray(true);
 
         return (string) \preg_replace(
@@ -497,9 +543,9 @@ class URLify
      *
      * @param string $language
      *
-     * @return array
+     * @return array<mixed>
      */
-    private static function get_remove_list(string $language = 'en'): array
+    private static function get_remove_list(string $language = 'en')
     {
         // check for language
         if ($language === '') {

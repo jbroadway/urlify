@@ -131,7 +131,7 @@ return PhpCsFixer\Config::create()
                                 'no_unset_on_property'                          => true,
                                 'no_unused_imports'                             => true,
                                 'no_useless_else'                               => true,
-                                'no_useless_return'                             => true,
+                                'no_useless_return'                             => false, // allow void
                                 'no_whitespace_before_comma_in_array'           => true,
                                 'no_whitespace_in_blank_line'                   => true,
                                 'non_printable_character'                       => true,

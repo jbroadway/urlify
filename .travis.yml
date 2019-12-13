@@ -9,7 +9,7 @@ php:
 
 before_script:
   - composer install --no-interaction --prefer-source
-  - if [ "$(phpenv version-name)" == 7.3 ]; then travis_retry composer require phpstan/phpstan-shim; fi
+  - if [ "$(phpenv version-name)" == 7.3 ]; then travis_retry composer require phpstan/phpstan; fi
 
 script:
   - vendor/bin/phpunit --coverage-text --verbose
