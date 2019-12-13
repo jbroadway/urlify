@@ -1,0 +1,20 @@
+The price is 5.99€
+The price is £5.99
+The price is $5.99
+The price is ¥5990
+5.99€ = 5 euros & 99 cents
+£5.99 = 5 pounds & 99 pence
+$5.99 = 5 dollars & 99 cents
+¥5990 = 5990 yen
+5.99€ is higher than $5.99
+lorem@ipsum.com
+lorem@ipsum
+lorem & ipsum
+lorem&ipsum at ipsum.com
+my username is @lorem
+The review gave 5* to the place
+10% of 10* is 1*
+use lorem@ipsum.com to get a 10% discount
+E = mc^2
+The gravity of Earth is 9.81 m/s2
+The #3 comment at @lorem = 10% of *&*

@@ -1,20 +1,15 @@
 <?php
 
 /**
- * A PHP port of URLify.js from the Django project
- * (https://github.com/django/django/blob/master/django/contrib/admin/static/admin/js/urlify.js).
- * Handles symbols from Latin languages, Greek, Turkish, Bulgarian, Russian,
- * Ukrainian, Czech, Polish, Romanian, Latvian, Lithuanian, Vietnamese, Arabic,
- * Serbian, Azerbaijani, Kazakh and Slovak. Symbols it cannot transliterate
- * it will simply omit.
+ * A PHP port of URLify.js from the Django project + fallback via "Portable ASCII".
  *
- * Usage:
+ * - https://github.com/django/django/blob/master/django/contrib/admin/static/admin/js/urlify.js
+ * - https://github.com/voku/portable-ascii
  *
- *     echo URLify::filter (' J\'étudie le français ');
- *     // "jetudie-le-francais"
- *
- *     echo URLify::filter ('Lo siento, no hablo español.');
- *     // "lo-siento-no-hablo-espanol"
+ * Handles symbols from latin languages, Arabic, Azerbaijani, Bulgarian, Burmese, Croatian, Czech, Danish, Esperanto,
+ * Estonian, Finnish, French, Switzerland (French), Austrian (French), Georgian, German, Switzerland (German),
+ * Austrian (German), Greek, Hindi, Kazakh, Latvian, Lithuanian, Norwegian, Persian, Polish, Romanian, Russian, Swedish,
+ * Serbian, Slovak, Turkish, Ukrainian and Vietnamese ... and many other via "ASCII::to_transliterate()".
  */
 class URLify
 {
@@ -23,118 +18,554 @@ class URLify
      *
      * ISO 639-1 codes: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
      *
-     * @var array
+     * @var array[]
      */
     public static $maps = [];
 
     /**
      * List of words to remove from URLs.
+     *
+     * @var array[]
      */
-    public static $remove_list = array (
-        'a', 'an', 'as', 'at', 'before', 'but', 'by', 'for', 'from',
-        'is', 'in', 'into', 'like', 'of', 'off', 'on', 'onto', 'per',
-        'since', 'than', 'the', 'this', 'that', 'to', 'up', 'via',
-        'with'
-    );
+    public static $remove_list = [];
 
-	/**
-	 * Add new characters to the list. `$map` should be a hash.
-     * @param array $map
-     * @param string|null $language
-	 */
-	public static function add_chars ($map, string $language = null)
+    /**
+     * An array of strings that will convert into the separator-char - used by "URLify::filter()".
+     *
+     * @var string[]
+     */
+    private static $arrayToSeparator = [];
+
+    /**
+     * Add new strings the will be replaced with the separator.
+     *
+     * @param array $array <p>An array of things that should replaced by the separator.</p>
+     * @param bool  $merge <p>Keep the previous (default) array-to-separator array.</p>
+     *
+     * @return void
+     *
+     * @psalm-param string[] $array
+     */
+    public static function add_array_to_separator(array $array, bool $merge = true)
     {
-        $language_key = $language ?? uniqid('urlify', true);
+        if ($merge === true) {
+            self::$arrayToSeparator = \array_unique(
+                \array_merge(
+                    self::$arrayToSeparator,
+                    $array
+                )
+            );
+        } else {
+            self::$arrayToSeparator = $array;
+        }
+    }
+
+    /**
+     * Add new characters to the list. `$map` should be a hash.
+     *
+     * @param array       $map
+     * @param string|null $language
+     *
+     * @return void
+     *
+     * @psalm-param array<string, string> $map
+     */
+    public static function add_chars(array $map, string $language = null)
+    {
+        $language_key = $language ?? \uniqid('urlify', true);
 
         if (isset(self::$maps[$language_key])) {
-            self::$maps[$language_key] = array_merge($map, self::$maps[$language_key]);
+            self::$maps[$language_key] = \array_merge($map, self::$maps[$language_key]);
         } else {
             self::$maps[$language_key] = $map;
         }
-	}
+    }
 
-	/**
-	 * Append words to the remove list. Accepts either single words
-	 * or an array of words.
-     * @param mixed $words
-	 */
-	public static function remove_words ($words)
+    /**
+     * @return void
+     */
+    public static function reset_chars()
     {
-		$words = is_array ($words) ? $words : array ($words);
-		self::$remove_list = array_unique (array_merge (self::$remove_list, $words));
-	}
+        self::$maps = [];
+    }
 
-	/**
-	 * Transliterates characters to their ASCII equivalents.
+    /**
+     * Transliterates characters to their ASCII equivalents.
      * $language specifies a priority for a specific language.
      * The latter is useful if languages have different rules for the same character.
-     * @param string $text
-     * @param string $language
+     *
+     * @param string $string   <p>The input string.</p>
+     * @param string $language <p>Your primary language.</p>
+     * @param string $unknown  <p>Character use if character unknown. (default is ?).</p>
+     *
      * @return string
-	 */
-	public static function downcode ($text, $language = "")
-    {
+     */
+    public static function downcode(
+        string $string,
+        string $language = 'en',
+        string $unknown = ''
+    ): string {
+        $string = self::expandString($string, $language);
+
         foreach (self::$maps as $mapsInner) {
             foreach ($mapsInner as $orig => $replace) {
-                $text = str_replace($orig, $replace, $text);
+                $string = \str_replace($orig, $replace, $string);
             }
         }
 
-        $langSpecific = \voku\helper\ASCII::charsArrayWithOneLanguage($language, true);
-        if (!empty($langSpecific)) {
-            $text = str_replace(
-                $langSpecific['orig'],
-                $langSpecific['replace'],
-                $text
+        $string = \voku\helper\ASCII::to_ascii(
+            $string,
+            $language,
+            false,
+            true
+        );
+
+        return \voku\helper\ASCII::to_transliterate(
+            $string,
+            $unknown,
+            false
+        );
+    }
+
+    /**
+     * Convert a String to URL.
+     *
+     * e.g.: "Petty<br>theft" to "Petty-theft"
+     *
+     * @param string      $string      <p>The text you want to convert.</p>
+     * @param int         $maxLength   <p>Max. length of the output string, set to "0" (zero) to
+     *                                 disable it</p>
+     * @param string      $language    <p>The language you want to convert to.</p>
+     * @param bool        $fileName    <p>
+     *                                 Keep the "." from the extension e.g.: "imaäe.jpg" =>
+     *                                 "image.jpg"
+     *                                 </p>
+     * @param bool        $removeWords <p>
+     *                                 Remove some "words" from the string.<br />
+     *                                 Info: Set extra words via <strong>remove_words()</strong>.
+     *                                 </p>
+     * @param bool        $strToLower  <p>Use <strong>strtolower()</strong> at the end.</p>
+     * @param bool|string $separator   <p>Define a new separator for the words.</p>
+     *
+     * @return string
+     */
+    public static function filter(
+        string $string,
+        int $maxLength = 200,
+        string $language = 'en',
+        bool $fileName = false,
+        bool $removeWords = false,
+        bool $strToLower = true,
+        $separator = '-'
+    ): string {
+        if ($string === '') {
+            return '';
+        }
+
+        // fallback
+        if ($language === '') {
+            $language = 'en';
+        }
+
+        // separator-fallback
+        if ($separator === false) {
+            $separator = '_';
+        }
+        if ($separator === true || $separator === '') {
+            $separator = '-';
+        }
+
+        // escaped separator
+        $separatorEscaped = \preg_quote($separator, '/');
+
+        // use defaults, if there are no values
+        if (self::$arrayToSeparator === []) {
+            self::reset_array_to_separator();
+        }
+
+        // remove apostrophes which are not used as quotes around a string
+        if (\strpos($string, "'") !== false) {
+            $stringTmp = \preg_replace("/(\w)'(\w)/u", '${1}${2}', $string);
+            if ($stringTmp !== null) {
+                $string = (string) $stringTmp;
+            }
+        }
+
+        // replace with $separator
+        $string = (string) \preg_replace(
+            self::$arrayToSeparator,
+            $separator,
+            $string
+        );
+
+        // remove all other html-tags
+        if (
+            \strpos($string, '<') !== false
+            ||
+            \strpos($string, '>') !== false
+        ) {
+            $string = \strip_tags($string);
+        }
+
+        // use special language replacer
+        $string = self::downcode($string, $language);
+
+        // replace with $separator, again
+        $string = (string) \preg_replace(
+            self::$arrayToSeparator,
+            $separator,
+            $string
+        );
+
+        // remove all these words from the string before urlifying
+        $removeWordsSearch = '//';
+        if ($removeWords === true) {
+            $removeList = self::get_remove_list($language);
+            if ($removeList !== []) {
+                $removeWordsSearch = '/\b(?:' . \implode('|', $removeList) . ')\b/ui';
+            }
+        }
+
+        // keep the "." from e.g.: a file-extension?
+        if ($fileName) {
+            $removePatternAddOn = '.';
+        } else {
+            $removePatternAddOn = '';
+        }
+
+        $string = (string) \preg_replace(
+            [
+                // 1) remove un-needed chars
+                '/[^' . $separatorEscaped . $removePatternAddOn . '\-a-zA-Z0-9\s]/u',
+                // 2) convert spaces to $separator
+                '/[\s]+/u',
+                // 3) remove some extras words
+                $removeWordsSearch,
+                // 4) remove double $separator's
+                '/[' . ($separatorEscaped ?: ' ') . ']+/u',
+                // 5) remove $separator at the end
+                '/[' . ($separatorEscaped ?: ' ') . ']+$/u',
+            ],
+            [
+                '',
+                $separator,
+                '',
+                $separator,
+                '',
+            ],
+            $string
+        );
+
+        // "substr" only if "$length" is set
+        if (
+            $maxLength
+            &&
+            $maxLength > 0
+            &&
+            \strlen($string) > $maxLength
+        ) {
+            $string = (string) \substr(\trim($string, $separator), 0, $maxLength);
+        }
+
+        // convert to lowercase
+        if ($strToLower === true) {
+            $string = \strtolower($string);
+        }
+
+        // trim "$separator" from beginning and end of the string
+        return \trim($string, $separator);
+    }
+
+    /**
+     * Append words to the remove list. Accepts either single words or an array of words.
+     *
+     * @param string|string[] $words
+     * @param string          $language
+     * @param bool            $merge <p>Keep the previous (default) remove-words array.</p>
+     *
+     * @return void
+     */
+    public static function remove_words($words, string $language = 'en', bool $merge = true)
+    {
+        if (\is_array($words) === false) {
+            $words = [$words];
+        }
+
+        foreach ($words as $removeWordKey => $removeWord) {
+            $words[$removeWordKey] = \preg_quote($removeWord, '/');
+        }
+
+        if ($merge === true) {
+            self::$remove_list[$language] = \array_unique(
+                \array_merge(
+                    self::get_remove_list($language),
+                    $words
+                )
+            );
+        } else {
+            self::$remove_list[$language] = $words;
+        }
+    }
+
+    /**
+     * Reset the internal "self::$arrayToSeparator" to the default values.
+     *
+     * @return void
+     */
+    public static function reset_array_to_separator()
+    {
+        self::$arrayToSeparator = [
+            '/&quot;|&amp;|&lt;|&gt;|&ndash;|&mdash;/i',  // ", &, <, >, –, —
+            '/⁻|-|—|_|"|`|´|\'/',
+            "#/\r\n|\r|\n|<br.*/?>#isU",
+        ];
+    }
+
+    /**
+     * reset the word-remove-array
+     *
+     * @param string $language
+     *
+     * @return void
+     */
+    public static function reset_remove_list(string $language = 'en')
+    {
+        if ($language === '') {
+            return;
+        }
+
+        $language_orig = $language;
+        $language = self::get_language_for_reset_remove_list($language);
+        if ($language === '') {
+            return;
+        }
+
+        $stopWords = new \voku\helper\StopWords();
+
+        try {
+            self::$remove_list[$language_orig] = $stopWords->getStopWordsFromLanguage($language);
+        } catch (\voku\helper\StopWordsLanguageNotExists $e) {
+            self::$remove_list[$language_orig] = [];
+        }
+    }
+
+    /**
+     * Alias of `URLify::downcode()`.
+     *
+     * @param string $string
+     * @param string $language
+     *
+     * @return string
+     */
+    public static function transliterate(string $string, string $language = 'en'): string
+    {
+        return self::downcode($string, $language);
+    }
+
+    /**
+     * Expands the given string replacing some special parts for words.
+     * e.g. "lorem@ipsum.com" is replaced by "lorem at ipsum dot com".
+     *
+     * Most of these transformations have been inspired by the pelle/slugger
+     * project, distributed under the Eclipse Public License.
+     * Copyright 2012 Pelle Braendgaard
+     *
+     * @param string $string The string to expand
+     * @param string $language
+     *
+     * @return string The result of expanding the string
+     */
+    protected static function expandString(string $string, string $language = 'en'): string
+    {
+        $string = self::expandCurrencies($string, $language);
+
+        return self::expandSymbols($string, $language);
+    }
+
+    /**
+     * @param string $language
+     *
+     * @return string
+     */
+    private static function get_language_for_reset_remove_list(string $language)
+    {
+        if ($language === '') {
+            return '';
+        }
+
+        if (
+            \strpos($language, '_') === false
+            &&
+            \strpos($language, '-') === false
+        ) {
+            $language = \strtolower($language);
+        } else {
+            $regex = '/(?<first>[a-z]{2}).*/i';
+            $language = \strtolower((string) \preg_replace($regex, '$1', $language));
+        }
+
+        return $language;
+    }
+
+    /**
+     * Expands the numeric currencies in euros, dollars, pounds
+     * and yens that the given string may include.
+     *
+     * @param string $string
+     * @param string $language
+     *
+     * @return string
+     */
+    private static function expandCurrencies(string $string, string $language = 'en')
+    {
+        if (
+            \strpos($string, '€') === false
+            &&
+            \strpos($string, '$') === false
+            &&
+            \strpos($string, '£') === false
+            &&
+            \strpos($string, '¥') === false
+        ) {
+            return $string;
+        }
+
+        if ($language === 'de') {
+            return (string) \preg_replace(
+                [
+                    '/(?:\s|^)(\d+)(?: )*€(?:\s|$)/',
+                    '/(?:\s|^)\$(?: )*(\d+)(?:\s|$)/',
+                    '/(?:\s|^)£(?: )*(\d+)(?:\s|$)/',
+                    '/(?:\s|^)¥(?: )*(\d+)(?:\s|$)/',
+                    '/(?:\s|^)(\d+)[.|,](\d+)(?: )*€(?:\s|$)/',
+                    '/(?:\s|^)\$(?: )*(\d+)[.|,](\d+)(?:\s|$)/',
+                    '/(?:\s|^)£(?: )*(\d+)[.|,](\d+)(?:\s|$)/',
+                ],
+                [
+                    ' \1 Euro ',
+                    ' \1 Dollar ',
+                    ' \1 Pound ',
+                    ' \1 Yen ',
+                    ' \1 Euro \2 Cent ',
+                    ' \1 Dollar \2 Cent ',
+                    ' \1 Pound \2 Pence ',
+                ],
+                $string
             );
         }
-        foreach (\voku\helper\ASCII::charsArrayWithMultiLanguageValues(true) as $replace => $orig) {
-            $text = str_replace($orig, $replace, $text);
+
+        return (string) \preg_replace(
+            [
+                '/(?:\s|^)1(?: )*€(?:\s|$)/',
+                '/(?:\s|^)(\d+)(?: )*€(?:\s|$)/',
+                '/(?:\s|^)\$(?: )*1(?:\s|$)/',
+                '/(?:\s|^)\$(?: )*(\d+)(?:\s|$)/',
+                '/(?:\s|^)£(?: )*1(?:\s|$)/',
+                '/(?:\s|^)£(?: )*(\d+)(?:\s|$)/',
+                '/(?:\s|^)¥(?: )*(\d+)(?:\s|$)/',
+                '/(?:\s|^)1[.|,](\d+)(?: )*€(?:\s|$)/',
+                '/(?:\s|^)(\d+)[.|,](\d+)(?: )*€(?:\s|$)/',
+                '/(?:\s|^)1[.|,](\d+)(?: )*$(?:\s|$)/',
+                '/(?:\s|^)\$(?: )*(\d+)[.|,](\d+)(?:\s|$)/',
+                '/(?:\s|^)1[.|,](\d+)(?: )*£(?:\s|$)/',
+                '/(?:\s|^)£(?: )*(\d+)[.|,](\d+)(?:\s|$)/',
+            ],
+            [
+                ' 1 Euro ',
+                ' \1 Euros ',
+                ' 1 Dollar ',
+                ' \1 Dollars ',
+                ' 1 Pound ',
+                ' \1 Pounds ',
+                ' \1 Yen ',
+                ' 1 Euros \1 Cents ',
+                ' \1 Euros \2 Cents ',
+                ' 1 Dollars \1 Cents ',
+                ' \1 Dollars \2 Cents ',
+                ' 1 Pounds \1 Pence ',
+                ' \1 Pounds \2 Pence ',
+            ],
+            $string
+        );
+    }
+
+    /**
+     * Expands the special symbols that the given string may include, such as '@', '.', '#' and '%'.
+     *
+     * @param string $string
+     * @param string $language
+     *
+     * @return string
+     */
+    private static function expandSymbols(string $string, string $language = 'en')
+    {
+        if (
+            \strpos($string, '©') === false
+            &&
+            \strpos($string, '®') === false
+            &&
+            \strpos($string, '@') === false
+            &&
+            \strpos($string, '&') === false
+            &&
+            \strpos($string, '%') === false
+            &&
+            \strpos($string, '=') === false
+        ) {
+            return $string;
         }
 
-        return $text;
-	}
+        $maps = \voku\helper\ASCII::charsArray(true);
 
-	/**
-	 * Filters a string, e.g., "Petty theft" to "petty-theft"
-	 * @param string $text The text to return filtered
-	 * @param int $length The length (after filtering) of the string to be returned
-	 * @param string $language The transliteration language, passed down to downcode()
-	 * @param bool $file_name Whether there should be and additional filter considering this is a filename
-	 * @param bool $use_remove_list Whether you want to remove specific elements previously set in self::$remove_list
-	 * @param bool $lower_case Whether you want the filter to maintain casing or lowercase everything (default)
-	 * @param bool $treat_underscore_as_space Treat underscore as space, so it will replaced with "-"
-     * @return string
-	 */
-	public static function filter ($text, $length = 60, $language = "", $file_name = false, $use_remove_list = true, $lower_case = true, $treat_underscore_as_space = true)
+        return (string) \preg_replace(
+            [
+                '/\s*©\s*/',
+                '/\s*®\s*/',
+                '/\s*@\s*/',
+                '/\s*&\s*/',
+                '/\s*%\s*/',
+                '/(\s*=\s*)/',
+            ],
+            [
+                $maps['latin_symbols']['©'],
+                $maps['latin_symbols']['®'],
+                $maps['latin_symbols']['@'],
+                $maps[$language]['&'] ?? '&',
+                $maps[$language]['%'] ?? '%',
+                $maps[$language]['='] ?? '=',
+            ],
+            $string
+        );
+    }
+
+    /**
+     * return the "self::$remove_list[$language]" array
+     *
+     * @param string $language
+     *
+     * @return array<mixed>
+     */
+    private static function get_remove_list(string $language = 'en')
     {
-		$text = self::downcode ($text,$language);
+        // check for language
+        if ($language === '') {
+            return [];
+        }
 
-		if ($use_remove_list) {
-			// remove all these words from the string before urlifying
-			$text = preg_replace ('/\b(' . implode ('|', self::$remove_list) . ')\b/i', '', $text);
-		}
+        // set remove-array
+        if (!isset(self::$remove_list[$language])) {
+            self::reset_remove_list($language);
+        }
 
-		// if downcode doesn't hit, the char will be stripped here
-		$remove_pattern = ($file_name) ? '/[^_\-.\-a-zA-Z0-9\s]/u' : '/[^\s_\-a-zA-Z0-9]/u';
-		$text = preg_replace ($remove_pattern, '', $text); // remove unneeded chars
-		if ($treat_underscore_as_space) {
-		    	$text = str_replace ('_', ' ', $text);             // treat underscores as spaces
-		}
-		$text = preg_replace ('/^\s+|\s+$/u', '', $text);  // trim leading/trailing spaces
-		$text = preg_replace ('/[-\s]+/u', '-', $text);    // convert spaces to hyphens
-		if ($lower_case) {
-			$text = strtolower ($text);                        // convert to lowercase
-		}
+        // check for array
+        if (
+            !isset(self::$remove_list[$language])
+            ||
+            empty(self::$remove_list[$language])
+        ) {
+            return [];
+        }
 
-		return trim (substr ($text, 0, $length), '-');     // trim to first $length chars
-	}
-
-	/**
-	 * Alias of `URLify::downcode()`.
-	 */
-	public static function transliterate ($text)
-    {
-		return self::downcode ($text);
-	}
+        return self::$remove_list[$language];
+    }
 }
