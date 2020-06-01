@@ -116,7 +116,7 @@ belarusian-lacinka-ja-mahu-jesci-sklo-jano-mne-ne-skodzic
 ukrainian-ya-mozu-yisti-sklo-i-vono-meni-ne-zaskodit
 bulgarian-moga-da-yam-stklo-to-ne-mi-vredi
 georgian-minas-vcham-da-ara-mtkiva
-armenian-krnam-apaki-owtel-ew-intsi-anhangist-ch-ener
+armenian-krnam-apaki-voutel-ev-intsi-anhangist-chyner
 albanian-une-mund-te-ha-qelq-dhe-nuk-me-gjen-gje
 turkish-cam-yiyebilirim-bana-zarari-dokunmaz
 turkish-ottoman-gam-yyh-blorm-bnga-drr-tokonmz
@@ -126,15 +126,15 @@ kannada-nnge-haani-aagde-naanu-gjnnu-tinbhudu
 hindi-maain-kaaanca-khaaa-sakataaa-hauun-oura-maujhae-usasae-kaoii-caota-nahaiin-pahauncataii
 tamil-naannn-knnnnaatti-caappittuveennn-atnnnaal-ennnkku-oru-keettum-vraatu
 telugu-neenu-gaaju-tinglnu-mriyu-alaa-ceesinaa-naaku-eemi-ibbndi-leedu
-sinhalese-mtt-viiduru-kaaemtt-haekiyi-eyin-mtt-kisi-haaniyk-sidu-novee
+sinhalese-mtt-viidu-rupee-kaaemtt-haekiyi-eyin-mtt-kisi-haaniyk-sidu-novee
 urdu3-myn-kanch-kha-skta-hon-aor-mghy-tklyf-nhyn-hoty
 pashto3-zh-shyshh-khorl-shm-hghh-ma-nh-khoroy
 farsi-persian3-mn-my-toanm-bdoni-ahsas-drd-shyshh-bkhorm
 arabic3-ana-kadr-aal-akl-alzgag-o-htha-la-yolmny
 aramaic-needed
 maltese-nista-niekol-il-hgieg-u-ma-jaghmilli-xejn
-hebrew3-ny-ykvl-lkvl-zkvkyt-vzh-l-mzyq-ly
-yiddish3-yk-q-n-sn-glaz-vn-s-tvt-myr-nysht-vi
+hebrew3-any-ykvl-lakvl-zkvkyt-vzh-la-mzyq-ly
+yiddish3-ayk-q-n-sn-glaaz-avn-s-tvt-myr-nysht-vi
 judeo-arabic-needed
 ladino-needed
 g-z-needed
@@ -150,7 +150,7 @@ tagalog-kaya-kong-kumain-nang-bubog-at-hindi-ako-masaktan
 chamorro-sina-yo-chumocho-krestat-ti-ha-nalalamen-yo
 fijian-au-rawa-ni-kana-iloilo-ia-au-sega-ni-vakacacani-kina
 javanese-aku-isa-mangan-beling-tanpa-lara
-burmese-kywntea-kywnm-myksanuingthny-lkyaeang-taikhuikmhu-myahipa-9
+burmese-kywntaw-kywnm-myksanuingthny-lkyaawng-taikhuikmhu-myahipa-9
 vietnamese-quoc-ngu-toi-co-the-an-thuy-tinh-ma-khong-hai-gi
 vietnamese-nom-4-xie-shi-e-shui-jing-kong-hai-yi
 khmer-khnyumqaacnyumknyckpaan-tooygmaanpnyhaar
@@ -164,7 +164,7 @@ tibetan-shel-sgo-z-ns-ng-n-gi-m-red
 chinese-wo-neng-tun-xia-bo-li-er-bu-shang-shen-ti
 chinese-traditional-wo-neng-tun-xia-bo-li-er-bu-shang-shen-ti
 taiwanese6-goa-e-tang-chiah-po-le-ma-be-tioh-siong
-japanese-si-hagarasuwoshi-beraremasusorehasi-woshang-tukemasen
+japanese-si-hagarasuwoshi-beraremasusorehasi-woshang-tsukemasen
 korean-naneun-yurireul-meogeul-su-isseoyo-geuraedo-apeuji-anhayo
 bislama-mi-save-kakae-glas-hemi-no-save-katem-mi
 hawaiian-hiki-ia-u-ke-ai-i-ke-aniani-a-ole-no-la-au-e-eha

@@ -30,7 +30,7 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
             'Lo siento, no hablo español.'                          => 'Lo siento, no hablo espanol.',
             '$1 -> %1 -> öäü -> ΦΞΠΏΣ -> 中文空白 -> 💩 '                => ' 1 Dollar -> Prozent 1 -> oeaeue -> FKsPWS -> Zhong Wen Kong Bai  ->  ',
             ' 22.99 € oder $ 19 | 1 $ | $ 1 = foobar'               => ' 22 Euro 99 Cent oder 19 Dollar | 1  Dollar  | 1 Dollar gleich foobar',
-            'זאת השפה העברית.‏'                                     => 'zt hshph h`bryt.',
+            'זאת השפה העברית.‏'                                     => 'zAt hSHph h`bryt.',
             '𐭠 𐭡 𐭢 𐭣 𐭤 𐭥 𐭦 𐭧 𐭨 𐭩 𐭪 𐭫 𐭬 𐭭 𐭮 𐭯 𐭰 𐭱 𐭲 𐭸 𐭹 𐭺 𐭻 𐭼 𐭽 𐭾 𐭿' => '                          ',
             'أحبك'                                                  => 'ahbk',
         ];
@@ -136,7 +136,7 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
             'foto.jpg'                               => 'фото.jpg',
             'Foto.jpg'                               => 'Фото.jpg',
             'oeaeue-test'                            => 'öäü  - test',
-            'shdgshdg.png'                           => 'שדגשדג.png',
+            'SHdgSHdg.png'                           => 'שדגשדג.png',
             'c-r-aaaaaeaaeOOOOOe141234SSucdthu-.jpg' => '—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–.jpg',
             '000-c-c-.txt'                           => '000—©—©.txt',
             ''                                       => ' ',
@@ -340,7 +340,7 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
             '      - ÖÄÜ- '                                         => 'oeaeue',
             'öäü'                                                   => 'oeaeue',
             '$1 -> %1 -> öäü -> ΦΞΠΏΣ -> 中文空白 -> 💩 '                => '1-dollar-prozent-1-oeaeue-fkspws-zhong-kong-bai',
-            'זאת השפה העברית.‏'                                     => 'zt-hshph-h-bryt',
+            'זאת השפה העברית.‏'                                     => 'zat-hshph-h-bryt',
             '𐭠 𐭡 𐭢 𐭣 𐭤 𐭥 𐭦 𐭧 𐭨 𐭩 𐭪 𐭫 𐭬 𐭭 𐭮 𐭯 𐭰 𐭱 𐭲 𐭸 𐭹 𐭺 𐭻 𐭼 𐭽 𐭾 𐭿' => '',
             'أحبك'                                                  => 'ahbk',
         ];
