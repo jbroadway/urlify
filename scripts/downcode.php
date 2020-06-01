@@ -4,6 +4,7 @@
 // Downcode the provided argument or stdin if the argument was not present
 //
 
+require_once \dirname(__DIR__) . '/vendor/autoload.php';
 require_once \dirname(__DIR__) . '/URLify.php';
 
 // Print usage and exit if arguments are invalid
@@ -12,6 +13,7 @@ if ($argc < 1 || $argc > 2) {
 }
 
 // Process the provided argument
+$piped = false;
 if ($argc === 2) {
     $s = $argv[1];
 // Or read from stdin if the argument wasn't present
