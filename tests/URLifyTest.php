@@ -410,11 +410,11 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
         $test = new URLify();
 
         $removeArray = $this->invokeMethod($test, 'get_remove_list', ['de']);
-        static::assertInternalType('array', $removeArray);
+        static::assertIsArray($removeArray);
         static::assertTrue(\in_array('ein', $removeArray, true));
 
         $removeArray = $this->invokeMethod($test, 'get_remove_list', ['']);
-        static::assertInternalType('array', $removeArray);
+        static::assertIsArray($removeArray);
         static::assertFalse(\in_array('ein', $removeArray, true));
 
         // reset

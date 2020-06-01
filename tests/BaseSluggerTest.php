@@ -25,7 +25,7 @@ abstract class BaseSluggerTest extends \PHPUnit\Framework\TestCase
      */
     protected $expectedFixturesDir;
 
-    protected function setUp()
+    protected function setUp() :void
     {
         $sluggerClassNamespace = $this->sluggerClassName;
         $this->slugger = new $sluggerClassNamespace();
