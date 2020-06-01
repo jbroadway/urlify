@@ -15,6 +15,12 @@ $ composer require jbroadway/urlify
 
 ## Usage
 
+First, include Composer's autoloader:
+
+```php
+require_once 'vendor/autoload.php';
+```
+
 To generate slugs for URLs:
 
 ```php
