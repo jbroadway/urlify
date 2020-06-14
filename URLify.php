@@ -1,7 +1,8 @@
 <?php
 
 /**
- * A PHP port of URLify.js from the Django project + fallback via "Portable ASCII".
+ * A fast PHP slug generator and transliteration library, started as a PHP port of URLify.js
+ * from the Django project + fallback via "Portable ASCII".
  *
  * - https://github.com/django/django/blob/master/django/contrib/admin/static/admin/js/urlify.js
  * - https://github.com/voku/portable-ascii
@@ -125,6 +126,25 @@ class URLify
             $unknown,
             false
         );
+    }
+    
+    /**
+     * Convert a String to URL slug. Wraps <strong>filter()</strong> with a simpler
+     * set of defaults for typical usage in generating blog post slugs.
+     *
+     * @param string      $string      <p>The text you want to convert.</p>
+     * @param int         $maxLength   <p>Max. length of the output string, set to "0" (zero) to
+     *                                 disable it</p>
+     * @param string      $separator   <p>Define a new separator for the words.</p>
+     * @param string      $language    <p>The language you want to convert to.</p>
+     */
+    public static function slug(
+    	string $string,
+    	int $maxLength = 200,
+    	string $separator = '-',
+    	string $language = 'en'
+    ): string {
+    	return self::filter ($string, $maxLength, $language, false, false, true, $separator);
     }
 
     /**
