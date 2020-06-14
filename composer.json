@@ -1,8 +1,8 @@
 {
 	"name": "jbroadway/urlify",
 	"type": "library",
-	"description": "PHP port of URLify.js from the Django project. Transliterates non-ascii characters for use in URLs.",
-	"keywords": ["urlify","transliterate","translit","transliteration","url","encode","slug","link","iconv"],
+	"description": "A fast PHP slug generator and transliteration library that converts non-ascii characters for use in URLs.",
+	"keywords": ["urlify","transliterate","translit","transliteration","url","encode","downcode","slug","slugify","slugs","link","iconv","blogging","blogs","unicode","ascii","seo"],
 	"homepage": "https://github.com/jbroadway/urlify",
 	"license": "BSD-3-Clause-Clear",
 	"authors": [
