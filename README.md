@@ -1,4 +1,10 @@
-# URLify for PHP [![Build Status](https://travis-ci.org/jbroadway/urlify.png)](https://travis-ci.org/jbroadway/urlify)
+# URLify for PHP
+
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/jbroadway/urlify/Continuous%20Integration/master)
+![Packagist License](https://img.shields.io/packagist/l/jbroadway/urlify)
+![Packagist Version](https://img.shields.io/packagist/v/jbroadway/urlify)
+![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/jbroadway/urlify)
+![Packagist Downloads](https://img.shields.io/packagist/dt/jbroadway/urlify)
 
 A fast PHP slug generator and transliteration library, started as a PHP port of
 [URLify.js](https://github.com/django/django/blob/master/django/contrib/admin/static/admin/js/urlify.js)
