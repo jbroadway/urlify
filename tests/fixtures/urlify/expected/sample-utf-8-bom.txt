@@ -120,7 +120,7 @@ armenian-krnam-apaki-voutel-ev-intsi-anhangist-chyner
 albanian-une-mund-te-ha-qelq-dhe-nuk-me-gjen-gje
 turkish-cam-yiyebilirim-bana-zarari-dokunmaz
 turkish-ottoman-gam-yyh-blorm-bnga-drr-tokonmz
-bangla-bengali-aami-kaanc-khete-paari-taate-aamaar-kono-kssti-hyy-naa
+bangla-bengali-ami-kannc-khete-pari-tate-amar-kono-kshti-hy-na
 marathi-maii-kaaaca-khaaauu-shakatao-malaa-tae-thaukhata-naaahaii
 kannada-nnge-haani-aagde-naanu-gjnnu-tinbhudu
 hindi-maain-kaaanca-khaaa-sakataaa-hauun-oura-maujhae-usasae-kaoii-caota-nahaiin-pahauncataii
