@@ -14,7 +14,7 @@
 	],
 	"require": {
 		"php": ">=7.2",
-		"voku/portable-ascii": "^1.4",
+		"voku/portable-ascii": "^2.0",
 		"voku/stop-words": "^2.0"
 	},
 	"require-dev": {
