@@ -91,7 +91,7 @@ plautdietsch-needed
 hungarian-meg-tudom-enni-az-uveget-nem-lesz-tole-bajom
 suomi-finnish-voin-syoda-lasia-se-ei-vahingoita-minua
 sami-northern-sahtan-borrat-lasa-dat-ii-leat-bavccas
-erzian-mon-yarsan-sulikado-dy-zy-yan-e-iste-nze-a-uli
+erzian-mon-iarsan-sulikado-dy-zyian-eistenze-a-uli
 northern-karelian-mie-voin-syvva-lasie-ta-minla-ei-ole-kipie
 southern-karelian-mina-voin-syvva-stoklua-dai-minule-ei-ole-kibie
 vepsian-needed
@@ -110,11 +110,11 @@ croatian-ja-mogu-jesti-staklo-i-ne-boli-me
 serbian-latin-ja-mogu-da-jedem-staklo
 serbian-cyrillic-ja-mogu-da-jedem-staklo
 macedonian-mozam-da-jadam-staklo-a-ne-me-steta
-russian-ya-mogu-est-steklo-ono-mne-ne-vredit
-belarusian-cyrillic-ya-magu-esci-sklo-yano-mne-ne-skodzic
+russian-ia-mogu-est-steklo-ono-mne-ne-vredit
+belarusian-cyrillic-ia-magu-esci-sklo-iano-mne-ne-skodzic
 belarusian-lacinka-ja-mahu-jesci-sklo-jano-mne-ne-skodzic
-ukrainian-ya-mozu-yisti-sklo-i-vono-meni-ne-zaskodit
-bulgarian-moga-da-yam-stklo-to-ne-mi-vredi
+ukrainian-ia-mozu-yisti-sklo-i-vono-meni-ne-zaskodit
+bulgarian-moga-da-iam-stieklo-to-ne-mi-vredi
 georgian-minas-vcham-da-ara-mtkiva
 armenian-krnam-apaki-voutel-ev-intsi-anhangist-chyner
 albanian-une-mund-te-ha-qelq-dhe-nuk-me-gjen-gje
@@ -156,7 +156,7 @@ vietnamese-nom-4-xie-shi-e-shui-jing-kong-hai-yi
 khmer-khnyumqaacnyumknyckpaan-tooygmaanpnyhaar
 lao-kh-nykineikwaidodnythiimnbmaidedayhkh-nyechb
 thai-chankinkracchkaid-aetmanaimthamaihchanecchb
-mongolian-cyrillic-bi-sil-ide-i-cadna-nadad-xortoi-bis
+mongolian-cyrillic-bi-sil-idei-cadna-nadad-xortoi-bis
 mongolian-classic-5-bi-sili-ideyu-chidana-nadur-qouradai-bisi
 dzongkha-needed
 nepali-ma-kaaanca-khaaana-sakachhauu-ra-malaaii-kaehai-naii-haunana
