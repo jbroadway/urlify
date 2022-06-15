@@ -173,7 +173,7 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
         static::assertSame('d-shh-l-c-r-aaaaaaaeooooo141234ssucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'el'));
         static::assertSame('d-shh-l-c-r-aaaaaaaeooooo141234ssucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'tr'));
         static::assertSame('d-sch-l-c-r-aaaaaaaeooooo141234ssucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'ru'));
-        static::assertSame('d-shh-l-c-r-aaaaaaaeooooo141234ssucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'uk'));
+        static::assertSame('d-shch-l-c-r-aaaaaaaeooooo141234ssucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'uk'));
         static::assertSame('d-shh-l-c-r-aaaaaaaeooooo141234ssucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'cs'));
         static::assertSame('d-shh-l-c-r-aaaaaaaeooooo141234ssucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'pl'));
         static::assertSame('d-shh-l-c-r-aaaaaaaeooooo141234ssucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'ro'));
