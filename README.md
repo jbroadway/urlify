@@ -1,6 +1,6 @@
 # URLify for PHP
 
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/jbroadway/urlify/Continuous%20Integration/master)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/jbroadway/urlify/ci.yml?branch=master)
 ![Packagist License](https://img.shields.io/packagist/l/jbroadway/urlify)
 ![Packagist Version](https://img.shields.io/packagist/v/jbroadway/urlify)
 ![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/jbroadway/urlify)
